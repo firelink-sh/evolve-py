@@ -1,0 +1,10 @@
+[project]
+name = "evolve-py"
+version = "0.1.0"
+description = "Efficiently evolve your fixed-width files to other file formats."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.ruff]
+line-length = 79
