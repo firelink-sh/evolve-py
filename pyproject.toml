@@ -4,7 +4,14 @@ version = "0.1.0"
 description = "Efficiently evolve your fixed-width files to other file formats."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "pandas>=2.3.1",
+]
 
 [tool.ruff]
 line-length = 79
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.5",
+]
