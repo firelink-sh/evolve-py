@@ -5,11 +5,11 @@
 
 </div>
 
-[!IMPORTANT]
-THIS IS CURRENTLY AN EXPERIMENTAL LIBRARY AND UNDERGOES BREAKING CHANGES
-ON A DAILY BASIS. SOON™ evolve WILL BE STABLE AND PROD READY TO USE
-FOR ALL YOUR ETL NEEDS, not all needs (scheduling, job dependency, etc.)
-but this is planned to be solved with another program (munin?)
+> [!IMPORTANT]
+> THIS IS CURRENTLY AN EXPERIMENTAL LIBRARY AND UNDERGOES BREAKING CHANGES
+> ON A DAILY BASIS. SOON™ evolve WILL BE STABLE AND PROD READY TO USE
+> FOR ALL YOUR ETL NEEDS, not all needs (scheduling, job dependency, etc.)
+> but this is planned to be solved with another program (munin?)
 
 
 ## Project outline/brainstorming
