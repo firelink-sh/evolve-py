@@ -1,17 +1,22 @@
 [project]
 name = "evolve-py"
 version = "0.1.0"
-description = "Efficiently evolve your fixed-width files to other file formats."
+description = " A highly efficient, composable, and lightweight ETL framework, Apache Arrow native."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = [
-    "pandas>=2.3.1",
+[dependency-groups]
+dev = [
+    "ruff>=0.8.0",
 ]
 
 [tool.ruff]
 line-length = 79
+indent-width = 4
+target-version = "py311"
 
-[dependency-groups]
-dev = [
-    "ruff>=0.12.5",
-]
+[tool.ruff.lint]
+select = ["F", "E", "W", "I", "D", "B", "A", "ANN", "S", "ASYNC", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
