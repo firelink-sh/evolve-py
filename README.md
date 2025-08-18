@@ -19,6 +19,43 @@ What is `evolve`?
 One-size fits-all framework for taking data from format A to format B and
 applying optional transforms T.
 
+```mermaid
+flowchart TD
+    %% Sources (Frontends)
+    subgraph Frontends
+        CSV[CSV Source]
+        JSON[JSON Source]
+        Parquet[Parquet Source]
+        SQL[SQL Source]
+        Custom[Custom Source]
+    end
+
+    %% Intermediate Representation
+    subgraph IR
+        Arrow[Apache Arrow]
+    end
+
+    %% Targets (Backends)
+    subgraph Backends
+        DW[Data Warehouse]
+        ML[ML Pipeline]
+        Viz[Visualization Tool]
+        CustomOut[Custom Format]
+    end
+
+    %% Mapping logic
+    CSV -->|Map to Arrow| Arrow
+    JSON -->|Map to Arrow| Arrow
+    SQL -->|Map to Arrow| Arrow
+    Custom -->|Conditional Mapping| Arrow
+    Parquet -->|Direct Mapping| DW
+
+    Arrow --> DW
+    Arrow --> ML
+    Arrow --> Viz
+    Arrow --> CustomOut
+```
+
 Why?
 - EL(T) is difficult, costly, without clear standards/frameworks it rapidly becomes messy.
 - no "lowcode"/UI/drag and drop shit, made for real data engineers, not business managers
