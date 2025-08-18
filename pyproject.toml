@@ -5,6 +5,8 @@ description = " A highly efficient, composable, and lightweight Apache Arrow nat
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "duckdb>=1.3.2",
+    "polars>=1.32.3",
     "pyarrow>=21.0.0",
 ]
 [dependency-groups]
