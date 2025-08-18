@@ -1,9 +1,12 @@
 [project]
 name = "evolve-py"
 version = "0.1.0"
-description = " A highly efficient, composable, and lightweight ETL framework, Apache Arrow native."
+description = " A highly efficient, composable, and lightweight Apache Arrow native ETL framework."
 readme = "README.md"
 requires-python = ">=3.11"
+dependencies = [
+    "pyarrow>=21.0.0",
+]
 [dependency-groups]
 dev = [
     "ruff>=0.8.0",
@@ -16,6 +19,7 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["F", "E", "W", "I", "D", "B", "A", "ANN", "S", "ASYNC", "SIM"]
+ignore = ["D100", "D212"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
