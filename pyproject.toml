@@ -14,15 +14,25 @@ dev = [
     "ruff>=0.8.0",
 ]
 
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+exclude = [".venv"]
+
 [tool.ruff]
 line-length = 79
 indent-width = 4
 target-version = "py311"
 
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
+
 [tool.ruff.lint]
-select = ["F", "E", "W", "I", "D", "B", "A", "ANN", "S", "ASYNC", "SIM"]
-ignore = ["D100", "D212"]
+select = ["D", "W", "E", "F", "B", "I", "ANN", "ASYNC", "S", "C4", "PTH", "N", "PERF"]
+ignore = ["D100", "D104", "D105", "D203", "D205", "D212"]
 
 [tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401"]
-
+"__init__.py" = ["F401", "F402"]
+"test_*.py" = ["D", "ANN", "E501"]

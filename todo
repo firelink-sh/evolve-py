@@ -29,3 +29,21 @@ class JsonFile(Source):
         # weird configs and stuff...
         pass
 ```
+
+-----------------------------------------------------------------------
+
+TODO tuesday:
+What would I like done today?
+- Have working example Source-[Transform(s)]->Target.
+ - what do I need to do to get here?
+  - Implement Targets :)
+   - lets start with JsonTarget, CsvTarget, ParquetTarget
+ - implement transforms
+   - start with... col_as_dtype? something like that? drop_nulls?
+   - lets start with drop_nulls (or as a class? `DropNulls`)
+
+Also fix pyright import issues... DONE
+
+DONE: working Pipeline example :) YAY
+
+-----------------------------------------------------------------------
