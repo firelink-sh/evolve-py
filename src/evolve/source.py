@@ -11,9 +11,13 @@ from typing import (
 import duckdb
 import pyarrow
 import pyarrow.parquet as pq
-from pyarrow import csv
-from pyarrow import fs
-from pyarrow import json
+from pyarrow import (
+    csv,
+    fs,
+    json,
+)
+
+from .ir import LazyIR
 
 
 class Source(abc.ABC):
@@ -44,7 +48,7 @@ class Source(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def load(self) -> pyarrow.Table:
+    def load(self) -> LazyIR:
         """Load data from the source to the internal representation (Arrow)."""
         pass
 
@@ -76,9 +80,10 @@ class PostgresSource(Source):
         self._user = user
         self._password = password
 
-    def load(self) -> pyarrow.Table:
+    def load(self) -> LazyIR:
         """Load the PostgreSQL table to a arrow.Table."""
-        return self._con.execute(f"""  # SQL injection :)
+        return LazyIR.from_arrow_table(
+            self._con.execute(f"""  # SQL injection :)
             SELECT * FROM postgres_scan(
                 'host={self._host} dbname={self._db}',
                 'user={self._user} password={self._password}',
@@ -86,6 +91,7 @@ class PostgresSource(Source):
                 '{self._table}'
             );
         """).fetch_arrow_table()
+        )
 
     def validate_config(self) -> None:
         """Validate the PostgreSQL config."""
@@ -108,7 +114,7 @@ class ParquetSource(Source):
             uri = Path(uri).resolve()
 
         if isinstance(uri, Path):
-            uri = "file:///" + str(uri)
+            uri = "file://" + str(uri)
 
         file_system, path = fs.FileSystem.from_uri(uri)
 
@@ -117,12 +123,14 @@ class ParquetSource(Source):
         self._path = path
         self._options = options
 
-    def load(self) -> pyarrow.Table:
+    def load(self) -> LazyIR:
         """Load the parquet to an Arrow table."""
         with self._file_system.open_input_file(self._path) as f:
-            return pq.read_table(
-                source=f,
-                **self._options,
+            return LazyIR.from_arrow_table(
+                pq.read_table(
+                    source=f,
+                    **self._options,
+                )
             )
 
     def validate_config(self) -> None:
@@ -149,7 +157,7 @@ class CsvSource(Source):
             uri = Path(uri).resolve()
 
         if isinstance(uri, Path):
-            uri = "file:///" + str(uri)
+            uri = "file://" + str(uri)
 
         file_system, path = fs.FileSystem.from_uri(uri)
 
@@ -160,14 +168,16 @@ class CsvSource(Source):
         self._parse_options = parse_options
         self._convert_options = convert_options
 
-    def load(self) -> pyarrow.Table:
+    def load(self) -> LazyIR:
         """Load the csv to an Arrow table."""
         with self._file_system.open_input_file(self._path) as f:
-            return csv.read_csv(
-                input_file=f,
-                read_options=self._read_options,
-                parse_options=self._parse_options,
-                convert_options=self._convert_options,
+            return LazyIR.from_arrow_table(
+                csv.read_csv(
+                    input_file=f,
+                    read_options=self._read_options,
+                    parse_options=self._parse_options,
+                    convert_options=self._convert_options,
+                )
             )
 
     def validate_config(self) -> None:
@@ -192,7 +202,7 @@ class JsonSource(Source):
             uri = Path(uri).resolve()
 
         if isinstance(uri, Path):
-            uri = "file:///" + str(uri)
+            uri = "file://" + str(uri)
 
         file_system, path = fs.FileSystem.from_uri(uri)
 
@@ -202,7 +212,7 @@ class JsonSource(Source):
         self._read_options = read_options
         self._parse_options = parse_options
 
-    def load(self) -> pyarrow.Table:
+    def load(self) -> LazyIR:
         """
         Read the json file to an Arrow table.
 
@@ -224,10 +234,12 @@ class JsonSource(Source):
 
         """
         with self._file_system.open_input_file(self._path) as f:
-            return json.read_json(
-                input_file=f,
-                read_options=self._read_options,
-                parse_options=self._parse_options,
+            return LazyIR.from_arrow_table(
+                json.read_json(
+                    input_file=f,
+                    read_options=self._read_options,
+                    parse_options=self._parse_options,
+                )
             )
 
     def validate_config(self) -> None:
