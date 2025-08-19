@@ -19,6 +19,15 @@ What is `evolve`?
 One-size fits-all framework for taking data from format A to format B and
 applying optional transforms T.
 
+High-performance data processing with Arrow:
+
+- **Columnar memory format**
+- **Zero-Copy data sharing**
+- **Vectorized operations**
+- **Memory efficiency**
+- **Compatibility with big-data technology**
+
+
 ```mermaid
 flowchart TD
     %% Sources (Frontends)
