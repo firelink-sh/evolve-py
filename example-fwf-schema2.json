@@ -1,0 +1,22 @@
+{
+    "name": "EvolutionExampleSchema2",
+    "version": 1337,
+    "columns": [
+        {
+            "name": "id",
+            "offset": 0,
+            "length": 5,
+            "dtype": "int",
+            "alignment": "Right",
+            "pad_symbol": "Whitespace",
+            "is_nullable": false
+        },
+        {
+            "name": "boss",
+            "offset": 5,
+            "length": 10,
+            "dtype": "str",
+            "is_nullable": false
+        }
+    ]
+}

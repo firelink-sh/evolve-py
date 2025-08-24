@@ -6,6 +6,10 @@ from .transform import Transform
 
 
 class Pipeline:
+    def __init__(self) -> None:
+        """Initialize the pipeline."""
+        self._transforms = []
+
     def with_source(self, s: Source) -> Pipeline:
         self._source = s
         return self
@@ -15,8 +19,6 @@ class Pipeline:
         return self
 
     def with_transform(self, t: Transform) -> Pipeline:
-        if not hasattr(self, "_transforms"):
-            self._transforms = []
         self._transforms.append(t)
         return self
 

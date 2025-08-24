@@ -95,7 +95,7 @@ class CsvTarget(TargetBase):
         """Write the data to csv file."""
         with self._file_system.open_output_stream(self._path) as f:
             csv.write_csv(
-                data=data,
+                data=data.get_ir().to_arrow(),
                 output_file=f,
                 write_options=self._write_options,
             )

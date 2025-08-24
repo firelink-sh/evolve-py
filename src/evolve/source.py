@@ -5,11 +5,13 @@ from pathlib import Path
 from typing import (
     Any,
     Dict,
+    Iterable,
     Optional,
+    Tuple,
 )
 
 import duckdb
-import pyarrow
+import polars as pl
 import pyarrow.parquet as pq
 from pyarrow import (
     csv,
@@ -247,79 +249,60 @@ class JsonSource(Source):
         pass
 
 
-class FileType:
-    """A filetype."""
-
-    _filetypes = ("json", "csv", "parquet")
-
-    @classmethod
-    def try_from_suffix(cls, suffix: str) -> FileType:
-        """Try and create a `FileType` from a file suffix."""
-        if suffix not in cls._filetypes:
-            raise ValueError(f"unknown file type suffix: {suffix}")
-
-        return cls(_type=suffix)
-
-    def __init__(self, _type: str) -> None:
-        """Initialize a FileType."""
-        self._type = _type
+class MultiFixedWidthSource(Source):
+    pass
 
 
-class LocalFile(Source):
-    """Implementation of a local data source.
-
-    But this is quite arbitrary right?
-    A JSON file could exist locally, on S3, somewhere else, so what should the
-    source say?
-
-    Should it be more of a LocalFile?
-
-    source = LocalFile("my_file.json")
-
-    Yea, I think `Source` should more be about defining WHERE the data is,
-    and the format is the config of the source. Does that make sense?
-
-    So - for a LocalFile(Source)
-
-    source = LocalFile("my_file.csv")
-
-    ```python
-    pipeline = Pipeline() \
-        .with_source(LocalFile("my_file.csv")) \
-        .with_target(LocalFile("my_file.parquet"))
-
-    pipeline.run()
-    ```
-
-    so what does Pipeline.run() do?
-
-    # Something like this?
-    def run() -> None:
-        # but how do we know when we need to load or not?
-        # that depends on the source and target?
-        # maybe for now - always load it to arrow
-        inner = self._source.load()
-        self._target.from(inner)
-
-    """
+class FixedWidthSource(Source):
+    """Implementation of a fixed width file (fwf) source."""
 
     def __init__(
-        self, path: str | Path, file_type: Optional[FileType] = None
+        self,
+        uri: str | Path,
+        colspecs: Iterable[Tuple[int, int]],
+        colnames: Iterable[str],
+        encoding: str = "utf8",
     ) -> None:
-        """Initialize a LocalFile source."""
-        super(LocalFile, self).__init__(name=self.__class__.__name__)
+        """Initialize a new FixedWidthSource."""
+        super(FixedWidthSource, self).__init__(name=self.__class__.__name__)
+        if isinstance(uri, str) and "://" not in uri:
+            # Most likely a relative local path
+            uri = Path(uri).resolve()
 
-        if isinstance(path, str):
-            path = Path(path)
+        if isinstance(uri, Path):
+            uri = "file://" + str(uri)
 
-        if file_type is None:
-            # have to determine filetype from path
-            print(
-                "no `file_type` specified, will try "
-                "and determine from path name..."
-            )
-            suffix = path.suffix
-            file_type = FileType.try_from_suffix(suffix)
+        file_system, path = fs.FileSystem.from_uri(uri)
 
+        self._file_system = file_system
         self._path = path
-        self._file_type = file_type
+        self._colspecs = colspecs
+        self._colnames = colnames
+        self._encoding = encoding
+
+    def load(self) -> LazyIR:
+        """Load the fixed width file to LazyIR."""
+        with self._file_system.open_input_file(self._path) as f:
+            df = pl.read_csv(
+                source=f,
+                has_header=False,
+                skip_rows=0,
+                new_columns=["full_str"],
+            )
+
+        # parse it to real form
+        df = df.with_columns(
+            [
+                pl.col("full_str")
+                .str.slice(st[0], st[1])
+                .str.strip_chars()
+                .alias(col)
+                for st, col in zip(self._colspecs, self._colnames, strict=True)
+            ]
+        ).drop("full_str")
+
+        return LazyIR(ir=df)
+
+    def validate_config(self) -> None:
+        """Validate the fwf reading config."""
+        pass
