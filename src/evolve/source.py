@@ -250,7 +250,83 @@ class JsonSource(Source):
 
 
 class MultiFixedWidthSource(Source):
-    pass
+    """Implementation of a Multi Fixed Width File (fwf) source."""
+
+    def __init__(
+        self,
+        uri: str | Path,
+        schema_map: Dict[
+            str, Dict[str, Iterable[str] | Iterable[Tuple[int, int]]]
+        ],
+        schema_spec_len: int,
+        schema_spec_offset: int = 0,
+        encoding: str = "utf8",
+    ) -> None:
+        """Initialize a new multi fixed width file (fwf) source."""
+        super(MultiFixedWidthSource, self).__init__(
+            name=self.__class__.__name__
+        )
+
+        if isinstance(uri, str) and "://" not in uri:
+            # Most likely a relative local path
+            uri = Path(uri).resolve()
+
+        if isinstance(uri, Path):
+            uri = "file://" + str(uri)
+
+        file_system, path = fs.FileSystem.from_uri(uri)
+
+        self._file_system = file_system
+        self._path = path
+        self._schema_spec_offset = schema_spec_offset
+        self._schema_spec_len = schema_spec_len
+        self._schema_map = schema_map
+        self._encoding = encoding
+
+    def load(self) -> LazyIR:
+        with self._file_system.open_input_file(self._path) as f:
+            df = pl.read_csv(
+                source=f,
+                has_header=False,
+                skip_rows=0,
+                new_columns=["full_str"],
+            )
+
+        # Extract schema identifer from each row
+        df = df.with_columns(
+            [
+                pl.col("full_str")
+                .str.slice(self._schema_spec_offset, self._schema_spec_len)
+                .alias("_schema_id")
+            ]
+        )
+
+        dfs = []
+
+        skip_n_chars = self._schema_spec_len + self._schema_spec_offset
+
+        for schema_id, schema_def in self._schema_map.items():
+            colspecs = schema_def["colspecs"]
+            colnames = schema_def["colnames"]
+
+            df_schema_spec = df.filter(pl.col("_schema_id") == schema_id)
+            df_schema_spec = df_schema_spec.with_columns(
+                [
+                    pl.col("full_str")
+                    .str.slice(start + skip_n_chars, width)
+                    .str.strip_chars()
+                    .alias(col)
+                    for (start, width), col in zip(
+                        colspecs, colnames, strict=True
+                    )
+                ]
+            ).drop(["full_str", "_schema_id"])
+            dfs.append(df_schema_spec)
+
+        return LazyIR(ir=dfs)
+
+    def validate_config(self) -> None:
+        pass
 
 
 class FixedWidthSource(Source):
@@ -265,6 +341,7 @@ class FixedWidthSource(Source):
     ) -> None:
         """Initialize a new FixedWidthSource."""
         super(FixedWidthSource, self).__init__(name=self.__class__.__name__)
+
         if isinstance(uri, str) and "://" not in uri:
             # Most likely a relative local path
             uri = Path(uri).resolve()

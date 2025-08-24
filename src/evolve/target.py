@@ -93,12 +93,26 @@ class CsvTarget(TargetBase):
 
     def write(self, data: LazyIR) -> None:
         """Write the data to csv file."""
-        with self._file_system.open_output_stream(self._path) as f:
-            csv.write_csv(
-                data=data.get_ir().to_arrow(),
-                output_file=f,
-                write_options=self._write_options,
-            )
+        data = data.get_ir()
+
+        # Write multiple files
+        if isinstance(data, list):
+            for idx, df in enumerate(data):
+                p = Path(self._path)
+                path = f"{p.stem}_{idx}{p.suffix}"
+                with self._file_system.open_output_stream(path) as f:
+                    csv.write_csv(
+                        data=df.to_arrow(),
+                        output_file=f,
+                        write_options=self._write_options,
+                    )
+        else:
+            with self._file_system.open_output_stream(self._path) as f:
+                csv.write_csv(
+                    data=data.get_ir().to_arrow(),
+                    output_file=f,
+                    write_options=self._write_options,
+                )
 
 
 class ParquetTarget(TargetBase):
