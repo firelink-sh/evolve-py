@@ -16,6 +16,14 @@ NATIVE SUPPORT FOR **firelink** scheduler.
 What is **firelink**? A highly efficient, platform agnostic, and lightweight job scheduler. (WIP)!
 
 
+## `pl.read_csv` VS `pl.scan_csv`
+
+|**Method**|**Behavior**|**Memory**|**Use case**|
+|:--|:--|:--|:--|
+|`pl.read_csv("file.csv")`|Reads the **entire CSV into memory immediately**|High for large
+files|Good for small to medium datasets, fast access|
+|`pl.scan_csv("file.csv")`|Creates a **lazy frame**: operations are deferred until `.collect()`|Low initially, computations optimized|Good for large datasets or multiple chained operations|
+
 ## Project outline/brainstorming
 
 What is `evolve`?
