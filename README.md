@@ -11,6 +11,10 @@
 > FOR ALL YOUR ETL NEEDS, not all needs (scheduling, job dependency, etc.)
 > but this is planned to be solved with another program (munin?)
 
+NATIVE SUPPORT FOR **firelink** scheduler.
+
+What is **firelink**? A highly efficient, platform agnostic, and lightweight job scheduler. (WIP)!
+
 
 ## Project outline/brainstorming
 
