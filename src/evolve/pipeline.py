@@ -1,14 +1,48 @@
 from __future__ import annotations
 
+import yaml
+
 from .source import Source
 from .target import TargetBase
 from .transform import Transform
 
 
 class Pipeline:
-    def __init__(self) -> None:
+    @classmethod
+    def from_yaml_file(cls, yaml_file) -> Pipeline:
+        with open(yaml_file, "r") as f:
+            yaml_str = f.read()
+
+        parsed = yaml.safe_load(yaml_str)
+        return cls(
+            source=parsed["source"],
+            target=parsed["target"],
+            transforms=parsed["transforms"],
+        )
+
+    def __init__(self, source=None, target=None, transforms=None) -> None:
         """Initialize the pipeline."""
-        self._transforms = []
+        if transforms is None:
+            transforms = []
+
+        self._source = source
+        self._target = target
+        self._transforms = transforms
+
+    def __str__(self) -> str:
+        s = "Pipeline(\n"
+        s += f"  source={self._source}\n"
+        s += f"  target={self._target}\n"
+        s += "  transforms="
+        if self._transforms:
+            s += "[\n"
+            for t in self._transforms:
+                s += f"    {t}\n"
+            s += "  ]\n"
+        else:
+            s += "None\n"
+        s += ")"
+        return s
 
     def with_source(self, s: Source) -> Pipeline:
         self._source = s
