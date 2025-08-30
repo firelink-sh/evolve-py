@@ -61,6 +61,7 @@ class PostgresSource(Source):
     def __init__(
         self,
         host: str,
+        port: str,
         db: str,
         schema: str,
         table: str,
@@ -76,6 +77,7 @@ class PostgresSource(Source):
 
         self._con = con
         self._host = host
+        self._port = port
         self._db = db
         self._schema = schema
         self._table = table
@@ -85,10 +87,10 @@ class PostgresSource(Source):
     def load(self) -> LazyIR:
         """Load the PostgreSQL table to a arrow.Table."""
         return LazyIR.from_arrow_table(
-            self._con.execute(f"""  # SQL injection :)
+            # SQL injection :)
+            self._con.execute(f"""
             SELECT * FROM postgres_scan(
-                'host={self._host} dbname={self._db}',
-                'user={self._user} password={self._password}',
+                'host={self._host} port={self._port} dbname={self._db} user={self._user} password={self._password}',
                 '{self._schema}',
                 '{self._table}'
             );
