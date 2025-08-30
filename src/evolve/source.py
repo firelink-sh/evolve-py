@@ -6,6 +6,7 @@ from typing import (
     Any,
     Dict,
     Iterable,
+    Mapping,
     Optional,
     Tuple,
 )
@@ -108,7 +109,7 @@ class ParquetSource(Source):
     def __init__(
         self,
         uri: str | Path,
-        **options: Dict[str, Any],
+        **options: Mapping[str, str],
     ) -> None:
         """Initialize a new ParquetSource."""
         super(ParquetSource, self).__init__(name=self.__class__.__name__)
@@ -130,12 +131,7 @@ class ParquetSource(Source):
     def load(self) -> LazyIR:
         """Load the parquet to an Arrow table."""
         with self._file_system.open_input_file(self._path) as f:
-            return LazyIR.from_arrow_table(
-                pq.read_table(
-                    source=f,
-                    **self._options,
-                )
-            )
+            return LazyIR.from_arrow_table(pq.read_table(source=f))
 
     def validate_config(self) -> None:
         """Validate the csv options."""

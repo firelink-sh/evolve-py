@@ -1,7 +1,60 @@
+import os
 import sqlalchemy
+import io
+from testcontainers.minio import MinioContainer
 from testcontainers.postgres import PostgresContainer
 
+from evolve.source import ParquetSource
 from evolve.source import PostgresSource
+
+import pyarrow as pa
+import pyarrow.parquet as pq
+
+
+def test_parquet_source_s3_minio():
+    with MinioContainer() as minio:
+        client = minio.get_client()
+        client.make_bucket("evolve-test")
+
+        table = pa.table({"name": ["banana", "coffee"], "yes": [1, 4]})
+        buffer = io.BytesIO()
+        pq.write_table(table, buffer)
+        buffer.seek(0)
+
+        # NOTE on `len(buffer.getvalue())`:
+        # io.BytesIO.getvalue() does not move the pointer into the buffer, it
+        # just return a `bytes` COPY of the buffer contents. The pointer
+        # `buffer.tell()` only moves when we do `read()` or `write()`.
+        # SO if the buffer is large - `getvalue()` duplicates it in memory
+        # which is not good, in that case we should do
+        # buffer.seek(0, io.SEEK_END)
+        # length = buffer.tell()
+        # buffer.seek(0)
+        # which doesn't make a copy of the memory
+
+        # What is 'octet-stream'?
+        # refers to a MIME type, specifically used for binary files that do not
+        # have a specific type - file contents are unknown.
+        client.put_object(
+            bucket_name="evolve-test",
+            object_name="evolve_created/test.parquet",
+            data=buffer,
+            length=len(buffer.getvalue()),
+            content_type="application/octet-stream",
+        )
+
+        host = minio.get_container_host_ip()
+        port = minio.get_exposed_port(minio.port)
+        endpoint = f"http://{host}:{port}"
+
+        os.environ["AWS_ACCESS_KEY_ID"] = minio.access_key
+        os.environ["AWS_SECRET_ACCESS_KEY"] = minio.secret_key
+
+        uri = "s3://evolve-test/evolve_created/test.parquet"
+
+        source = ParquetSource(uri)
+        ir = source.load()
+        print(ir.get_ir().head())
 
 
 def test_postgres_source():
