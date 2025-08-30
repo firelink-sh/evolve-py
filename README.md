@@ -9,11 +9,11 @@
 > THIS IS CURRENTLY AN EXPERIMENTAL LIBRARY AND UNDERGOES BREAKING CHANGES
 > ON A DAILY BASIS. SOON™ evolve WILL BE STABLE AND PROD READY TO USE
 > FOR ALL YOUR ETL NEEDS, not all needs (scheduling, job dependency, etc.)
-> but this is planned to be solved with another program (munin?)
+> but this is planned to be solved with another program (firelink!)
 
 NATIVE SUPPORT FOR **firelink** scheduler.
 
-What is **firelink**? A highly efficient, platform agnostic, and lightweight job scheduler. (WIP)!
+What is **firelink**? A highly efficient, platform agnostic, and lightweight job scheduler. (WIP)! [link](https://github.com/firelink-sh/firelink)
 
 
 ## `pl.read_csv` VS `pl.scan_csv`
