@@ -1,14 +1,13 @@
-import os
-import sqlalchemy
 import io
-from testcontainers.minio import MinioContainer
-from testcontainers.postgres import PostgresContainer
-
-from evolve.source import ParquetSource
-from evolve.source import PostgresSource
+import os
 
 import pyarrow as pa
 import pyarrow.parquet as pq
+import sqlalchemy
+from testcontainers.minio import MinioContainer
+from testcontainers.postgres import PostgresContainer
+
+from evolve.source import ParquetSource, PostgresSource
 
 
 def test_parquet_source_s3_minio():
@@ -46,13 +45,14 @@ def test_parquet_source_s3_minio():
         host = minio.get_container_host_ip()
         port = minio.get_exposed_port(minio.port)
         endpoint = f"http://{host}:{port}"
-
-        os.environ["AWS_ACCESS_KEY_ID"] = minio.access_key
-        os.environ["AWS_SECRET_ACCESS_KEY"] = minio.secret_key
-
         uri = "s3://evolve-test/evolve_created/test.parquet"
 
-        source = ParquetSource(uri)
+        source = ParquetSource(
+            uri,
+            access_key=minio.access_key,
+            secret_key=minio.secret_key,
+            endpoint_override=endpoint,
+        )
         ir = source.load()
         print(ir.get_ir().head())
 

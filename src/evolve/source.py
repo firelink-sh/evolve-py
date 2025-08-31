@@ -121,7 +121,15 @@ class ParquetSource(Source):
         if isinstance(uri, Path):
             uri = "file://" + str(uri)
 
-        file_system, path = fs.FileSystem.from_uri(uri)
+        if "s3://" in uri:
+            file_system = fs.S3FileSystem(
+                access_key=options.get("access_key"),
+                secret_key=options.get("secret_key"),
+                endpoint_override=options.get("endpoint_override"),
+            )
+            path = uri.replace("s3://", "")
+        else:
+            file_system, path = fs.FileSystem.from_uri(uri)
 
         self._uri = uri
         self._file_system = file_system
