@@ -1,19 +1,19 @@
 import abc
 
 
-class SourceBase(abc.ABC):
-    """Base class for a `Source` connector frontend."""
+class BaseSource(abc.ABC):
+    """Abstract base class for a connector frontend (source)."""
 
     def __init__(
         self,
         name: str,
     ) -> None:
-        """Initialize base fields for the `Source` object."""
+        """Initialize base fields for the `BaseSource` object."""
         self._name = name
 
     @property
     def name(self) -> str:
-        """Get the name of the `Source`."""
+        """Get the name of the `BaseSource`."""
         return self._name
 
     @abc.abstractmethod
@@ -24,7 +24,7 @@ class SourceBase(abc.ABC):
     @abc.abstractmethod
     def validate_config(self) -> None:
         """
-        Validate the provided config for the `Source`.
+        Validate the provided config for the `BaseSource`.
 
         Raises
         ------
