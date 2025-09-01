@@ -16,13 +16,6 @@ NATIVE SUPPORT FOR **firelink** scheduler.
 What is **firelink**? A highly efficient, platform agnostic, and lightweight job scheduler. (WIP)! [link](https://github.com/firelink-sh/firelink)
 
 
-## `pl.read_csv` VS `pl.scan_csv`
-
-|**Method**|**Behavior**|**Memory**|**Use case**|
-|:--|:--|:--|:--|
-|`pl.read_csv("file.csv")`|Reads the **entire CSV into memory immediately**|High for large files|Good for small to medium datasets, fast access|
-|`pl.scan_csv("file.csv")`|Creates a **lazy frame**: operations are deferred until `.collect()`|Low initially, computations optimized|Good for large datasets or multiple chained operations|
-
 ## Project outline/brainstorming
 
 What is `evolve`?
@@ -165,18 +158,18 @@ target:
 **Goal:** build a minimal, working ELT pipeline with Arrow as the backbone.
 
 Core features:
-- [ ] `Pipeline` class with source -> transforms -> target
-- [ ] Apache Arrow integration (pyarrow.Table)
-- [ ] Basic source connectors: PostgreSQL, CSV, Parquet
-- [ ] Basic target connectors: PostgreSQL, CSV, Parquet
-- [ ] Transform functions: `cast_to`, `drop_nulls`, `rename_columns`, `filter_rows`
-- [ ] YAML & JSON config support
-- [ ] Config loader and pipeline builder
+- [x] `Pipeline` class with source -> transforms -> target
+- [x] Apache Arrow integration (pyarrow.Table)
+- [x] Basic source connectors: PostgreSQL, CSV, Parquet
+- [x] Basic target connectors: PostgreSQL, CSV, Parquet
+- [x] Transform functions: `cast_to`, `drop_nulls`, `rename_columns`, `filter_rows`
+- [x] YAML & JSON config support
+- [x] Config loader and pipeline builder
 
 Dev experience:
 - [ ] logging and error handling
-- [ ] sample config files and datasets (examples)
-- [ ] github repo public with readme and licensing
+- [x] sample config files and datasets (examples)
+- [x] github repo public with readme and licensing
 
 
 ### Phase 2: Usability & Extensibility
