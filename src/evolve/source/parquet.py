@@ -5,6 +5,7 @@ from typing import (
     Tuple,
 )
 
+import pyarrow.parquet as pq
 from pyarrow import fs
 
 from .base import BaseSource
@@ -24,7 +25,10 @@ class ParquetSource(BaseSource):
 
         # It was most likely a path to a local file.
         if "://" not in uri:
-            uri = "file://" + uri
+            prefix = "file://"
+            if uri.startswith("/"):
+                prefix = "file:/"
+            uri = prefix + uri
 
         if "file://" in uri:
             file_system = fs.LocalFileSystem()
@@ -51,7 +55,7 @@ class ParquetSource(BaseSource):
             file_path = uri.replace("s3://", "")
         else:
             raise ValueError(
-                f"could not figure out file system from uri={uri}"
+                f"could not figure out the file system from uri={uri}"
             )
 
         return (file_system, file_path)
@@ -71,7 +75,7 @@ class ParquetSource(BaseSource):
     def load(self) -> None:
         """Load the parquet file from the source to IR."""
         with self._file_system.open_input_file(self._file_path) as f:
-            pass
+            return pq.read_table(source=f)
 
     def validate_config(self) -> None:
         """Validate the provided parquet file reading options."""

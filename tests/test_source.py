@@ -7,7 +7,8 @@ import sqlalchemy
 from testcontainers.minio import MinioContainer
 from testcontainers.postgres import PostgresContainer
 
-from evolve.source import ParquetSource, PostgresSource
+from evolve.source import ParquetSource
+from evolve.old_source import PostgresSource
 
 
 def test_parquet_source_s3_minio():
@@ -54,7 +55,7 @@ def test_parquet_source_s3_minio():
             endpoint_override=endpoint,
         )
         ir = source.load()
-        print(ir.get_ir().head())
+        print(ir.head())
 
 
 def test_postgres_source():
