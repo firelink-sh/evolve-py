@@ -2,14 +2,30 @@ from __future__ import annotations
 
 import yaml
 
-from .source import Source
+from .source.base import BaseSource
 from .target import TargetBase
 from .transform import Transform
 
 
 class Pipeline:
+    """
+    Implementation of a `Pipeline` that defines a source to read data
+    from, a target to put data to, and optional transforms to apply in-transit.
+    """
+
+    @classmethod
+    def from_yaml_str(cls, yaml_str: str) -> Pipeline:
+        """Create a new `Pipeline` defined in a yaml string."""
+        parsed = yaml.safe_load(yaml_str)
+        return cls(
+            source=parsed["source"],
+            target=parsed["target"],
+            transforms=parsed["transforms"],
+        )
+
     @classmethod
     def from_yaml_file(cls, yaml_file) -> Pipeline:
+        """Create a new `Pipeline` defined in a yaml file."""
         with open(yaml_file, "r") as f:
             yaml_str = f.read()
 
@@ -44,7 +60,7 @@ class Pipeline:
         s += ")"
         return s
 
-    def with_source(self, s: Source) -> Pipeline:
+    def with_source(self, s: BaseSource) -> Pipeline:
         self._source = s
         return self
 
