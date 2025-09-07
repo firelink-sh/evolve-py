@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import yaml
+from pathlib import Path
 
 from .source.base import BaseSource
 from .target import TargetBase
@@ -24,9 +25,12 @@ class Pipeline:
         )
 
     @classmethod
-    def from_yaml_file(cls, yaml_file) -> Pipeline:
+    def from_yaml_file(cls, yaml_file: Path | str) -> Pipeline:
         """Create a new `Pipeline` defined in a yaml file."""
-        with open(yaml_file, "r") as f:
+        if isinstance(yaml_file, str):
+            yaml_file = Path(yaml_file)
+
+        with yaml_file.open("r") as f:
             yaml_str = f.read()
 
         parsed = yaml.safe_load(yaml_str)
