@@ -261,17 +261,13 @@ class MultiFixedWidthSource(Source):
     def __init__(
         self,
         uri: str | Path,
-        schema_map: Dict[
-            str, Dict[str, Iterable[str] | Iterable[Tuple[int, int]]]
-        ],
+        schema_map: Dict[str, Dict[str, Iterable[str] | Iterable[Tuple[int, int]]]],
         schema_spec_len: int,
         schema_spec_offset: int = 0,
         encoding: str = "utf8",
     ) -> None:
         """Initialize a new multi fixed width file (fwf) source."""
-        super(MultiFixedWidthSource, self).__init__(
-            name=self.__class__.__name__
-        )
+        super(MultiFixedWidthSource, self).__init__(name=self.__class__.__name__)
 
         if isinstance(uri, str) and "://" not in uri:
             # Most likely a relative local path
@@ -322,9 +318,7 @@ class MultiFixedWidthSource(Source):
                     .str.slice(start + skip_n_chars, width)
                     .str.strip_chars()
                     .alias(col)
-                    for (start, width), col in zip(
-                        colspecs, colnames, strict=True
-                    )
+                    for (start, width), col in zip(colspecs, colnames, strict=True)
                 ]
             ).drop(["full_str", "_schema_id"])
             dfs.append(df_schema_spec)
@@ -376,10 +370,7 @@ class FixedWidthSource(Source):
         # parse it to real form
         df = df.with_columns(
             [
-                pl.col("full_str")
-                .str.slice(st[0], st[1])
-                .str.strip_chars()
-                .alias(col)
+                pl.col("full_str").str.slice(st[0], st[1]).str.strip_chars().alias(col)
                 for st, col in zip(self._colspecs, self._colnames, strict=True)
             ]
         ).drop("full_str")

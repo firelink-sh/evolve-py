@@ -1,4 +1,10 @@
 class InvalidConfigError(Exception):
-    """When a provided config did not pass the defined validation checks."""
+    """Raised when a provided config did not pass the defined validation checks."""
+
+    pass
+
+
+class UnknownUriSchemeError(Exception):
+    """Raised when an unsupported URI scheme was encountered."""
 
     pass

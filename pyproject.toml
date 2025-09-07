@@ -26,7 +26,7 @@ venv = ".venv"
 exclude = [".venv"]
 
 [tool.ruff]
-line-length = 79
+line-length = 88
 indent-width = 4
 target-version = "py311"
 
@@ -41,4 +41,4 @@ ignore = ["D100", "D104", "D105", "D203", "D205", "D212"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F402"]
-"test_*.py" = ["D", "ANN", "E501"]
+"test_*.py" = ["S", "D", "ANN", "E501"]
