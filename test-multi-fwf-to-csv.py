@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 
 from src.evolve.pipeline import Pipeline
 from src.evolve.source import CsvSource, MultiFixedWidthSource

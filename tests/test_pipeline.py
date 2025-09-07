@@ -4,7 +4,6 @@ from unittest.mock import patch
 
 from evolve.pipeline import Pipeline
 
-
 DUMMY_YAML = """
     source:
        type: parquet
