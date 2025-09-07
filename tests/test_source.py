@@ -1,5 +1,6 @@
 import io
 import os
+from pathlib import Path
 
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -7,8 +8,16 @@ import sqlalchemy
 from testcontainers.minio import MinioContainer
 from testcontainers.postgres import PostgresContainer
 
-from evolve.source import ParquetSource
 from evolve.old_source import PostgresSource
+from evolve.source import ParquetSource
+
+
+def test_parquet_source_local_file():
+    source = ParquetSource(
+        Path.cwd() / "examples" / "data" / "weather.parquet",
+    )
+    ir = source.load()
+    print(ir)
 
 
 def test_parquet_source_s3_minio():

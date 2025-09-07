@@ -32,7 +32,8 @@ class ParquetSource(BaseSource):
 
         if "file://" in uri:
             file_system = fs.LocalFileSystem()
-            file_path = uri
+            # If local file then remove 'file:/' to make absolute local path.
+            file_path = uri.replace("file:/", "")
         elif "s3://" in uri:
             file_system = fs.S3FileSystem(
                 access_key=options.get(
