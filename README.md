@@ -44,8 +44,8 @@ flowchart TD
     end
 
     %% Intermediate Representation
-    subgraph Backend (IR)
-        Arrow[Apache Arrow / Polars DF / Custom backend]
+    subgraph Backend
+        Arrow[Apache Arrow / Polars / DuckDB / Custom]
     end
 
     %% Targets (Connectors)
@@ -55,7 +55,6 @@ flowchart TD
         HDFS[Hadoop file system]
         DW[Data Warehouse]
         ML[ML Pipeline]
-        Viz[Visualization Tool]
         CustomOut[Custom Format]
     end
 
@@ -64,7 +63,7 @@ flowchart TD
     JSON -->|Map to Arrow| Arrow
     SQL -->|Map to Arrow| Arrow
     Custom -->|Conditional Mapping| Arrow
-    Parquet -->|Direct Mapping| DW
+    Parquet -->|Direct Mapping| S3
 
     Arrow --> S3
     Arrow --> Local
