@@ -34,22 +34,25 @@ High-performance data processing with Arrow:
 
 ```mermaid
 flowchart TD
-    %% Sources (Frontends)
-    subgraph Frontends
-        CSV[CSV Source]
-        JSON[JSON Source]
-        Parquet[Parquet Source]
+    %% Sources (Connectors)
+    subgraph Sources
+        CSV[Local CSV Source]
+        JSON[HDFS JSON Source]
+        Parquet[S3 Parquet Source]
         SQL[SQL Source]
         Custom[Custom Source]
     end
 
     %% Intermediate Representation
-    subgraph IR
-        Arrow[Apache Arrow]
+    subgraph Backend (IR)
+        Arrow[Apache Arrow / Polars DF / Custom backend]
     end
 
-    %% Targets (Backends)
-    subgraph Backends
+    %% Targets (Connectors)
+    subgraph Targets
+        S3[S3 object store]
+        Local[Local file system]
+        HDFS[Hadoop file system]
         DW[Data Warehouse]
         ML[ML Pipeline]
         Viz[Visualization Tool]
@@ -63,6 +66,9 @@ flowchart TD
     Custom -->|Conditional Mapping| Arrow
     Parquet -->|Direct Mapping| DW
 
+    Arrow --> S3
+    Arrow --> Local
+    Arrow --> HDFS
     Arrow --> DW
     Arrow --> ML
     Arrow --> Viz
