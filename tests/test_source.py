@@ -55,7 +55,7 @@ def test_parquet_source_s3_minio():
             endpoint_override=endpoint,
         )
         ir = source.load()
-        print(ir.head())
+        print(ir)
 
 
 def test_postgres_source():
