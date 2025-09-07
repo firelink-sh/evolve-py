@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-import yaml
 from pathlib import Path
+
+import yaml
 
 from .source.base import BaseSource
 from .target import TargetBase

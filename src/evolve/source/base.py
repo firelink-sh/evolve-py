@@ -10,6 +10,7 @@ from typing import (
 from pyarrow import fs
 
 from ..exceptions import UnknownUriSchemeError
+from ..ir import IR
 
 
 def _try_get_file_system_from_uri(
@@ -100,7 +101,7 @@ def _try_get_file_system_from_uri(
 
 
 class BaseSource(abc.ABC):
-    """Abstract base class for a connector frontend (source)."""
+    """Abstract base class for a source (connector)."""
 
     def __init__(
         self,
@@ -115,7 +116,7 @@ class BaseSource(abc.ABC):
         return self._name
 
     @abc.abstractmethod
-    def load(self) -> None:
+    def load(self) -> IR:
         """Load data from the defined source to an ir representation."""
         pass
 

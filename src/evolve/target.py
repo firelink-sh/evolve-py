@@ -6,8 +6,6 @@ from typing import (
     Optional,
 )
 
-import polars as pl
-import pyarrow
 from pyarrow import (
     csv,
     fs,

@@ -1,13 +1,10 @@
-import os
 from pathlib import Path
 from typing import (
     Any,
     Mapping,
-    Tuple,
 )
 
 import pyarrow.parquet as pq
-from pyarrow import fs
 
 from .base import (
     BaseSource,
@@ -19,7 +16,7 @@ class ParquetSource(BaseSource):
     """Implementation of a parquet file source."""
 
     def __init__(self, uri: str | Path, **fs_options: Mapping[str, Any]) -> None:
-        """Initialize a new `ParquetSource`."""
+        """Initialize a new `ParquetSource` with the provided file system specific options."""
         super().__init__(name=self.__class__.__name__)
 
         file_system, file_path = _try_get_file_system_from_uri(

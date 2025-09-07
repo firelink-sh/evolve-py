@@ -1,9 +1,6 @@
 import abc
 from typing import List
 
-import pyarrow
-from pyarrow import compute as pc
-
 from .ir import LazyIR
 
 
