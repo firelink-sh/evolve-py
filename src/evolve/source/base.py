@@ -10,7 +10,7 @@ from typing import (
 from pyarrow import fs
 
 from ..exceptions import UnknownUriSchemeError
-from ..ir import IR
+from ..ir import IR, BaseBackend
 
 
 def _try_get_file_system_from_uri(
@@ -114,9 +114,11 @@ class BaseSource(abc.ABC):
     def __init__(
         self,
         name: str,
+        backend: BaseBackend,
     ) -> None:
         """Initialize base fields for the `BaseSource` object."""
         self._name = name
+        self._backend = backend
 
     @property
     def name(self) -> str:

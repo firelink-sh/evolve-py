@@ -4,8 +4,9 @@ from typing import Mapping
 from pyarrow import csv
 
 from evolve.ir import (
+    BaseBackend,
     IR,
-    _current_backend,
+    get_global_backend,
 )
 
 from .base import (
@@ -17,9 +18,18 @@ from .base import (
 class CsvSource(BaseSource):
     """Implementation of a csv file source."""
 
-    def __init__(self, uri: str | Path, **options: Mapping[str, str]) -> None:
+    def __init__(
+        self,
+        uri: str | Path,
+        *,
+        backend: BaseBackend | None = None,
+        **options: Mapping[str, str],
+    ) -> None:
         """Initialize a new `CsvSource` with the provided file system options."""
-        super().__init__(name=self.__class__.__name__)
+        super().__init__(
+            name=self.__class__.__name__,
+            backend=backend or get_global_backend(),
+        )
 
         file_system, file_path = _try_get_file_system_from_uri(
             uri,
@@ -34,8 +44,14 @@ class CsvSource(BaseSource):
 
     def load(self) -> IR:
         """Load the csv file from the source to IR."""
+        if self._backend != get_global_backend():
+            raise ValueError(
+                f"You have changed global backend since creating this {self._name} "
+                f"with backend={self._backend} (global_backend={get_global_backend()})"
+            )
+
         with self._file_system.open_input_file(self._file_path) as f:
-            return _current_backend.ir_from_arrow_table(
+            return self._backend.ir_from_arrow_table(
                 csv.read_csv(
                     input_file=f,
                     read_options=self._read_options,
