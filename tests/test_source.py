@@ -8,7 +8,14 @@ from testcontainers.minio import MinioContainer
 from testcontainers.postgres import PostgresContainer
 
 from evolve.old_source import PostgresSource
-from evolve.source import ParquetSource
+from evolve.source import ParquetSource, CsvSource
+
+
+def test_csv_source_local_file():
+    source = CsvSource("examples/data/dummy.csv")
+    ir = source.load()
+    print("========== LOCAL CSV ===========")
+    print(ir.head())
 
 
 def test_parquet_source_local_file():
@@ -16,7 +23,8 @@ def test_parquet_source_local_file():
         Path.cwd() / "examples" / "data" / "weather.parquet",
     )
     ir = source.load()
-    print(ir)
+    print("========== LOCAL PARQUET ============")
+    print(ir.head())
 
 
 def test_parquet_source_s3_minio():
@@ -63,7 +71,8 @@ def test_parquet_source_s3_minio():
             endpoint_override=endpoint,
         )
         ir = source.load()
-        print(ir)
+        print("============ S3 parquet ============")
+        print(ir.head())
 
 
 def test_postgres_source():
@@ -97,4 +106,5 @@ def test_postgres_source():
         )
 
         ir = source.load()
+        print("========== POSTGRES TABLE ============")
         print(ir.get_ir().head())

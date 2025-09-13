@@ -33,6 +33,14 @@ def _try_get_file_system_from_uri(
         system.
 
     """
+    if (
+        isinstance(uri, str)
+        and "://" not in uri
+        and not (uri.startswith("/") or uri.startswith("./"))
+    ):
+        # local RELATIVE path - so make it a path and it will be resolved below
+        uri = Path(uri)
+
     if isinstance(uri, Path):
         uri = str(uri.resolve())
 

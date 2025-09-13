@@ -20,16 +20,22 @@ class BaseBackend(abc.ABC):
 
 
 class ArrowBackend(BaseBackend):
+    """Implementation of an `Arrow` in-memory backend."""
+
     def ir_from_arrow_table(self, table: pa.Table) -> IR:
         return table
 
 
 class PolarsBackend(BaseBackend):
+    """Implementation of a `Polars` in-memory backend."""
+
     def ir_from_arrow_table(self, table: pa.Table) -> IR:
-        pl.from_arrow(table)
+        return pl.from_arrow(table)
 
 
 class DuckdbBackend(BaseBackend):
+    """Implementation of a `DuckDB` in-memory backend."""
+
     def __init__(self) -> None:
         self._conn = duckdb.connect(database=":memory:")
 
