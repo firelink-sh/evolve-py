@@ -24,12 +24,21 @@ class BaseBackend(abc.ABC):
     def ir_from_arrow_table(self, table: pa.Table) -> IR:
         pass
 
+    @abc.abstractmethod
+    def ir_to_arrow_table(self, data: IR) -> pa.Table:
+        pass
+
 
 class ArrowBackend(BaseBackend):
     """Implementation of an `Arrow` in-memory backend."""
 
-    def ir_from_arrow_table(self, table: pa.Table) -> IR:
+    def ir_from_arrow_table(self, table: pa.Table) -> pa.Table:
+        """This is a no-op."""
         return table
+
+    def ir_to_arrow_table(self, data: pa.Table) -> pa.Table:
+        """This is a no-op."""
+        return data
 
 
 class PolarsBackend(BaseBackend):
@@ -37,6 +46,9 @@ class PolarsBackend(BaseBackend):
 
     def ir_from_arrow_table(self, table: pa.Table) -> IR:
         return pl.from_arrow(table)
+
+    def ir_to_arrow_table(self, data: pl.DataFrame) -> pa.Table:
+        return data.to_arrow()
 
 
 class DuckdbBackend(BaseBackend):
@@ -48,6 +60,9 @@ class DuckdbBackend(BaseBackend):
 
     def ir_from_arrow_table(self, table: pa.Table) -> IR:
         return self._conn.register("tmp_arrow_data", table)
+
+    def ir_to_arrow_table(self, data: duckdb.DuckDBPyConnection) -> pa.Table:
+        return data.execute("SELECT * FROM tmp_arrow_data;").fetch_arrow_table()
 
 
 class LazyIR:

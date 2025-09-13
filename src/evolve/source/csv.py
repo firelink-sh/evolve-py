@@ -4,17 +4,14 @@ from typing import Mapping
 
 from pyarrow import csv
 
-from evolve.ir import (
+from .._utils import _try_get_file_system_from_uri
+from ..ir import (
+    IR,
     BackendMismatchWarning,
     BaseBackend,
-    IR,
     get_global_backend,
 )
-
-from .base import (
-    BaseSource,
-    _try_get_file_system_from_uri,
-)
+from .base import BaseSource
 
 
 class CsvSource(BaseSource):

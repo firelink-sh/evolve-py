@@ -1,14 +1,12 @@
+from src.evolve.ir import PolarsBackend, set_global_backend
 from src.evolve.pipeline import Pipeline
-from src.evolve.source import (
-    JsonSource,
-    ParquetSource,
-)
-from src.evolve.target import (
-    ParquetTarget,
-)
-from src.evolve.transform import DropColumns
+from src.evolve.source import CsvSource, ParquetSource
+from src.evolve.target import CsvTarget
+
+set_global_backend(PolarsBackend())
 
 if __name__ == "__main__":
+    """
     print("READING JSON CONVERTING TO PARQUET")
 
     pipeline = (
@@ -27,7 +25,6 @@ if __name__ == "__main__":
     source = ParquetSource("xd.parquet")
     print(source.load().get_ir())
 
-    """
     print("======================= JSON =======================")
     # json_source = JsonSource("./examples/data/dummy.json")
     json_source = JsonSource(Path.cwd() / "examples" / "data" / "dummy.json")
@@ -91,3 +88,15 @@ if __name__ == "__main__":
     print(pq_table)
     print(pl.from_arrow(pq_table))
     """
+    pipeline = (
+        Pipeline()
+        .with_source(ParquetSource("./examples/data/weather.parquet"))
+        .with_target(
+            CsvTarget("file:///home/tony/git/firelink-sh/evolve-py/xd.csv"),
+        )
+    )
+
+    pipeline.run()
+
+    source = CsvSource("xd.csv")
+    print(source.load().head())

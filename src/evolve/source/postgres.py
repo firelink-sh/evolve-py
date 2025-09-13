@@ -1,11 +1,10 @@
 import duckdb
 
-from evolve.ir import (
+from ..ir import (
     IR,
     BaseBackend,
     get_global_backend,
 )
-
 from .base import BaseSource
 
 

@@ -7,17 +7,14 @@ from typing import (
 
 import pyarrow.parquet as pq
 
-from evolve.ir import (
+from .._utils import _try_get_file_system_from_uri
+from ..ir import (
     IR,
     BackendMismatchWarning,
     BaseBackend,
     get_global_backend,
 )
-
-from .base import (
-    BaseSource,
-    _try_get_file_system_from_uri,
-)
+from .base import BaseSource
 
 
 class ParquetSource(BaseSource):
