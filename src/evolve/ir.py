@@ -11,6 +11,12 @@ import pyarrow as pa
 IR = Union[pl.DataFrame, pa.Table, duckdb.DuckDBPyConnection]
 
 
+class BackendMismatchWarning(Warning):
+    """When global backend does not match set backend."""
+
+    pass
+
+
 class BaseBackend(abc.ABC):
     """Abstract base class for a in-memory backend."""
 
@@ -37,6 +43,7 @@ class DuckdbBackend(BaseBackend):
     """Implementation of a `DuckDB` in-memory backend."""
 
     def __init__(self) -> None:
+        """Initialize in-memory database connection."""
         self._conn = duckdb.connect(database=":memory:")
 
     def ir_from_arrow_table(self, table: pa.Table) -> IR:

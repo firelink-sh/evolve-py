@@ -1,9 +1,11 @@
+import warnings
 from pathlib import Path
 from typing import Mapping
 
 from pyarrow import csv
 
 from evolve.ir import (
+    BackendMismatchWarning,
     BaseBackend,
     IR,
     get_global_backend,
@@ -45,11 +47,12 @@ class CsvSource(BaseSource):
     def load(self) -> IR:
         """Load the csv file from the source to IR."""
         if self._backend != get_global_backend():
-            raise ValueError(
-                f"You have changed global backend since creating this {self._name} "
-                f"with backend={self._backend} (global_backend={get_global_backend()})"
+            warnings.warn(
+                "the defined backend for the source is not equal to the global backend "
+                "currently in use, be aware of potential IR mismatches",
+                BackendMismatchWarning,
+                2,
             )
-
         with self._file_system.open_input_file(self._file_path) as f:
             return self._backend.ir_from_arrow_table(
                 csv.read_csv(

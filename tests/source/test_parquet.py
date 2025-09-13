@@ -1,25 +1,76 @@
 import io
 from pathlib import Path
 
+from duckdb import DuckDBPyConnection
 import pyarrow as pa
 import pyarrow.parquet as pq
 from testcontainers.minio import MinioContainer
 
 from evolve.ir import (
+    ArrowBackend,
+    DuckdbBackend,
     PolarsBackend,
     set_global_backend,
 )
 from evolve.source import ParquetSource
 
-set_global_backend(PolarsBackend())
+
+def test_parquet_source_local_file_arrow_backend():
+    source = ParquetSource(
+        "examples/data/weather.parquet",
+        backend=ArrowBackend(),
+    )
+    ir = source.load()
+    print("============ LOCAL Parquet (Backend: PyArrow) ============")
+    print(ir)
+    assert isinstance(ir, pa.Table)
 
 
-def test_parquet_source_local_file():
+def test_parquet_source_s3_minio_duckdb_backend():
+    with MinioContainer() as minio:
+        client = minio.get_client()
+        client.make_bucket("evolve-test")
+
+        table = pa.table({"name": ["banana", "coffee"], "yes": [1, 4]})
+        buffer = io.BytesIO()
+        pq.write_table(table, buffer)
+        buffer.seek(0)
+
+        client.put_object(
+            bucket_name="evolve-test",
+            object_name="evolve_created/test.parquet",
+            data=buffer,
+            length=len(buffer.getvalue()),
+            content_type="application/octet-stream",
+        )
+
+        host = minio.get_container_host_ip()
+        port = minio.get_exposed_port(minio.port)
+        endpoint = f"http://{host}:{port}"
+        uri = "s3://evolve-test/evolve_created/test.parquet"
+
+        source = ParquetSource(
+            uri,
+            access_key=minio.access_key,
+            secret_key=minio.secret_key,
+            endpoint_override=endpoint,
+            backend=DuckdbBackend(),
+        )
+        ir = source.load()
+        assert isinstance(ir, DuckDBPyConnection)
+        t = ir.execute("SELECT * FROM tmp_arrow_data;").fetch_arrow_table()
+        print("============ LOCAL Parquet (Backend: DuckDB) ============")
+        print(t)
+        assert isinstance(t, pa.Table)
+
+
+def test_parquet_source_local_file_polars_backend():
+    set_global_backend(PolarsBackend())
     source = ParquetSource(
         Path.cwd() / "examples" / "data" / "weather.parquet",
     )
     ir = source.load()
-    print("========== LOCAL PARQUET ============")
+    print("========== LOCAL PARQUET (Backend: Polars) ============")
     print(ir.head())
 
 

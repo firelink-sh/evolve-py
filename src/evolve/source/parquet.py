@@ -1,3 +1,4 @@
+import warnings
 from pathlib import Path
 from typing import (
     Any,
@@ -7,8 +8,9 @@ from typing import (
 import pyarrow.parquet as pq
 
 from evolve.ir import (
-    BaseBackend,
     IR,
+    BackendMismatchWarning,
+    BaseBackend,
     get_global_backend,
 )
 
@@ -48,7 +50,12 @@ class ParquetSource(BaseSource):
     def load(self) -> IR:
         """Load the parquet file from the source to IR."""
         if self._backend != get_global_backend():
-            raise ValueError("")
+            warnings.warn(
+                "the defined backend for the source is not equal to the global backend"
+                "currently in use, be aware of potential IR mismatches",
+                BackendMismatchWarning,
+                2,
+            )
 
         with self._file_system.open_input_file(self._file_path) as f:
             return self._backend.ir_from_arrow_table(pq.read_table(source=f))
