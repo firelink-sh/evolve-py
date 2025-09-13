@@ -3,19 +3,15 @@ from pathlib import Path
 
 import pyarrow as pa
 import pyarrow.parquet as pq
-import sqlalchemy
 from testcontainers.minio import MinioContainer
-from testcontainers.postgres import PostgresContainer
 
-from evolve.old_source import PostgresSource
-from evolve.source import ParquetSource, CsvSource
+from evolve.ir import (
+    PolarsBackend,
+    set_global_backend,
+)
+from evolve.source import ParquetSource
 
-
-def test_csv_source_local_file():
-    source = CsvSource("examples/data/dummy.csv")
-    ir = source.load()
-    print("========== LOCAL CSV ===========")
-    print(ir.head())
+set_global_backend(PolarsBackend())
 
 
 def test_parquet_source_local_file():
@@ -73,38 +69,3 @@ def test_parquet_source_s3_minio():
         ir = source.load()
         print("============ S3 parquet ============")
         print(ir.head())
-
-
-def test_postgres_source():
-    with PostgresContainer(
-        "postgres:latest", username="xd", password="xdd", dbname="test"
-    ) as postgres:
-        engine = sqlalchemy.create_engine(postgres.get_connection_url())
-
-        with engine.begin() as conn:
-            conn.execute(sqlalchemy.text("CREATE SCHEMA IF NOT EXISTS test;"))
-            conn.execute(
-                sqlalchemy.text(
-                    "CREATE TABLE IF NOT EXISTS test.bananas (name text, size integer);"
-                )
-            )
-            conn.execute(
-                sqlalchemy.text(
-                    "INSERT INTO test.bananas (name, size) VALUES ('chiquita', 149), ('dark soul', 1894718);"
-                )
-            )
-            conn.commit()
-
-        source = PostgresSource(
-            host=postgres.get_container_host_ip(),
-            port=postgres.get_exposed_port(postgres.port),
-            db="test",
-            schema="test",
-            table="bananas",
-            user="xd",
-            password="xdd",
-        )
-
-        ir = source.load()
-        print("========== POSTGRES TABLE ============")
-        print(ir.get_ir().head())
