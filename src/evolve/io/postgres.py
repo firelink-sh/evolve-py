@@ -58,6 +58,9 @@ class PostgresTable(BaseIO):
         SELECT {columns} FROM {duckdb_pg_db}.{schema}.{table};
         """
 
+        write_query = f"""
+        """
+
         scan_query = f"""
         SELECT * FROM postgres_scan(
             'host={host} port={port} dbname={db} user={user} password={password}',
