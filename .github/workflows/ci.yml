@@ -7,6 +7,7 @@ on:
       - 'tests/**'
       - 'pyproject.toml'
       - 'uv.lock'
+      - '.github/workflows/ci.yml'
   push:
     branches: [ main ]
     paths:
@@ -14,6 +15,7 @@ on:
       - 'tests/**'
       - 'pyproject.toml'
       - 'uv.lock'
+      - '.github/workflows/ci.yml'
 
 jobs:
 
