@@ -32,9 +32,9 @@ class BaseBackend(abc.ABC):
 class ArrowBackend(BaseBackend):
     """Implementation of an `Arrow` in-memory backend."""
 
-    def ir_from_arrow_table(self, table: pa.Table) -> pa.Table:
+    def ir_from_arrow_table(self, data: pa.Table) -> pa.Table:
         """This is a no-op."""
-        return table
+        return data
 
     def ir_to_arrow_table(self, data: pa.Table) -> pa.Table:
         """This is a no-op."""
@@ -42,6 +42,9 @@ class ArrowBackend(BaseBackend):
 
     def ir_to_polars_df(self, data: pa.Table) -> pl.DataFrame:
         return pl.from_arrow(data)
+
+    def ir_from_polars(self, data: pl.DataFrame | pl.Series) -> pa.Table:
+        return data.to_arrow()
 
 
 class PolarsBackend(BaseBackend):

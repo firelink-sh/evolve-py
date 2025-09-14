@@ -45,5 +45,6 @@ class ParquetFile(BaseIO):
         with self._file_system.open_output_stream(self._file_path) as destination:
             pq.write_table(
                 table=self._backend.ir_to_arrow_table(data),
+                where=destination,
                 **self._write_options,
             )
