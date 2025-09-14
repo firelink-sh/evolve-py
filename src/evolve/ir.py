@@ -40,6 +40,9 @@ class ArrowBackend(BaseBackend):
         """This is a no-op."""
         return data
 
+    def ir_to_polars_df(self, data: pa.Table) -> pl.DataFrame:
+        return pl.from_arrow(data)
+
 
 class PolarsBackend(BaseBackend):
     """Implementation of a `Polars` in-memory backend."""
@@ -49,6 +52,9 @@ class PolarsBackend(BaseBackend):
 
     def ir_to_arrow_table(self, data: pl.DataFrame) -> pa.Table:
         return data.to_arrow()
+
+    def ir_to_polars_df(self, data: pl.DataFrame) -> pl.DataFrame:
+        return data
 
 
 class DuckdbBackend(BaseBackend):

@@ -1,4 +1,4 @@
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from pyarrow import csv
 
@@ -10,14 +10,26 @@ from ..ir import (
     get_global_backend,
 )
 
+if TYPE_CHECKING:
+    from typing import Unpack
+    from pathlib import Path
+
 
 class CsvFile(BaseIO):
     """Implementation of a csv file."""
 
-    def __init__(self, uri: str | Path, *, backend: BaseBackend | None = None, **options) -> None:
+    def __init__(
+        self,
+        uri: str | Path,
+        *,
+        backend: BaseBackend | None = None,
+        **options,
+    ) -> None:
         """Initialize a new `CsvFile` with the provided options."""
-        super().__init__(name=self.__class__.__name__, backend=backend or get_global_backend())
-        
+        super().__init__(
+            name=self.__class__.__name__, backend=backend or get_global_backend()
+        )
+
         file_system, file_path = _try_get_file_system_from_uri(
             uri,
             **options,
@@ -28,9 +40,10 @@ class CsvFile(BaseIO):
         self._read_options = options.get("read_options")
         self._parse_options = options.get("parse_options")
         self._convert_options = options.get("convert_options")
+        self._write_options = options.get("write_options")
 
-    def load(self) -> IR:
-        """Load the csv file from the source path to the configured backend IR."""
+    def read(self) -> IR:
+        """Read the file from the source path to the configured backend IR."""
         with self._file_system.open_input_file(self._file_path) as source:
             return self._backend.ir_from_arrow_table(
                 csv.read_csv(

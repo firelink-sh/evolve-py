@@ -1,32 +1,36 @@
 import abc
+from typing import TYPE_CHECKING
 
-from ..ir import IR, BaseBackend
+from ..ir import IR
+
+if TYPE_CHECKING:
+    from ..ir import BaseBackend
 
 
 class BaseIO(abc.ABC):
     """Abstract base class for an I/O object."""
 
     def __init__(self, name: str, backend: BaseBackend) -> None:
-        """ """
+        """Initialize common attributes for the `BaseIO` object."""
         self._name = name
         self._backend = backend
-
-    @property
-    def name(self) -> str:
-        """Get the name of the I/O object."""
-        return self._name
 
     @property
     def backend(self) -> BaseBackend:
         """Get the backend of the I/O object."""
         return self._backend
 
+    @property
+    def name(self) -> str:
+        """Get the name of the I/O object."""
+        return self._name
+
     @abc.abstractmethod
-    def load(self) -> IR:
-        """Load the data from the source path to the backend IR."""
+    def read(self) -> IR:
+        """Read the data from the source path to the configured backend IR."""
         pass
 
     @abc.abstractmethod
     def write(self, data: IR) -> None:
-        """Write the backend IR data to the target path.""" 
+        """Write the backend IR data to the target path."""
         pass
