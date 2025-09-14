@@ -47,5 +47,6 @@ jobs:
         with:
           token: "${{ secrets.CODECOV_TOKEN }}"
           files: coverage.xml
+          slug: firelink-sh/evolve-py
           fail_ci_if_error: true
 
