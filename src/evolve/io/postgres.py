@@ -23,6 +23,7 @@ class PostgresTable(BaseIO):
         columns: Iterable[str] | None = None,
         backend: BaseBackend | None = None,
     ) -> None:
+        """Initialize the `PostgresTable`."""
         super().__init__(
             name=self.__class__.__name__,
             backend=backend or get_global_backend(),
@@ -54,24 +55,17 @@ class PostgresTable(BaseIO):
         );
         """)
 
+        if not isinstance(columns, str):
+            columns = ", ".join(columns)
+
         read_query = f"""
         SELECT {columns} FROM {duckdb_pg_db}.{schema}.{table};
         """
 
-        write_query = f"""
-        """
-
-        scan_query = f"""
-        SELECT * FROM postgres_scan(
-            'host={host} port={port} dbname={db} user={user} password={password}',
-            '{schema}',
-            '{table}'
-        );
-        """
+        print(read_query)
 
         self._conn = conn
         self._read_query = read_query
-        self._scan_query = scan_query
 
         self._host = host
         self._port = port

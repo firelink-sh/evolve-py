@@ -10,9 +10,7 @@ from ..ir import (
     get_global_backend,
 )
 
-if TYPE_CHECKING:
-    from typing import Unpack
-    from pathlib import Path
+from pathlib import Path
 
 
 class CsvFile(BaseIO):

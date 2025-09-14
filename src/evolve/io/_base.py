@@ -1,10 +1,6 @@
 import abc
-from typing import TYPE_CHECKING
 
-from ..ir import IR
-
-if TYPE_CHECKING:
-    from ..ir import BaseBackend
+from ..ir import IR, BaseBackend
 
 
 class BaseIO(abc.ABC):
