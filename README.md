@@ -15,13 +15,18 @@
 
 </div>
 
-evolve is an **open-source** and **platform agnostic** Python framework that enables your data teams to **efficiently integrate data** from a wide variety of **structured** or **unstructured** data sources into your **database**, **data warehouse**, or **data lake(house)** — **blazingly fast** with **minimal memory overhead** all thanks to Apache Arrow. 
+evolve is an **open-source** and **platform agnostic** Python framework that enables your data teams to **efficiently integrate data** from a wide variety of **structured** or **unstructured** data sources into your **database**, **data warehouse**, or **data lake(house)** — **blazingly fast** with **minimal memory overhead** thanks to Apache Arrow. 
 
-It is **built for developers** with a code-first mindset. You will not find any low-code, clickops, or drag-and-drop shenanigans here.
+It is **built for developers** with a **code-first** mindset. You will not find any low-code, clickops, or drag-and-drop shenanigans here.
 evolve offers you full control of how your data is read, parsed, handled in-memory, transformed, and finally written to any destination you need.
 
+- **Composable** - Design your own data pipelines to fit into your own stack, and add any extra (possibly proprietary) sources or targets that you might possibly need, all possible through evolve's intuitive and lightweight framework philosophy.
+- **Blazing fast** - Zero-copy principles by leveraging Apache Arrow gives you extremely rapid in-memory operations perfect for OLAP and easy interoperability with DuckDB, Polars, Spark, DataFusion and many more query engines.
+- **Customizable** - You choose the backend that you want to use. Do you prefer DataFrames? Use Polars! Or perhaps you prefer to work on data using SQL? Then use the DuckDB backend! It is completely up to you.
+- **Platform agnostic** - Run your ETL/ELT using evolve on your own infrastructure, no vendor lock-in, never.
 
-## Hgih-level architecture
+
+## Architecture (alpha version)
 
 ```mermaid
 flowchart TD
