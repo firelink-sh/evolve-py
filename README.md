@@ -1,13 +1,13 @@
 <div align="center">
 
-<img src="https://github.com/firelink-sh/evolve-py/blob/e0cd1de29957eeb740f329a21f3ae11e59aab0a0/docs/assets/evolve-banner.png" alt="evolve logo" style="width:500px; height:auto">
+<img src="https://github.com/firelink-sh/evolve-py/blob/368bd3c6d1f520515a63b2f7b1340976a5c58b94/docs/assets/evolve-banner.png" alt="evolve logo" style="width:500px; height:auto">
 <p>
     <em>A highly efficient, composable, and lightweight ETL and data integration framework</em>
 </p>
 
 <br>
 
-[![CI](https://github.com/firelink-sh/evolve-py/actions/workflows/ci.yml/badge.svg)](https://github.com/firelink-sh/evolve/actions/workflows/ci.yml)
+[![CI](https://github.com/firelink-sh/evolve-py/actions/workflows/ci.yml/badge.svg)](https://github.com/firelink-sh/evolve-py/actions/workflows/ci.yml)
 [![Tests](https://github.com/firelink-sh/evolve-py/actions/workflows/tests.yml/badge.svg)](https://github.com/firelink-sh/evolve-py/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/firelink-sh/evolve-py/graph/badge.svg?token=OTFIM6UICZ)](https://codecov.io/gh/firelink-sh/evolve-py)
 
