@@ -1,28 +1,27 @@
 <div align="center">
 
-# evolve
-##### A highly efficient, composable, and lightweight ETL framework, Apache Arrow native.
+<img src="https://github.com/firelink-sh/evolve-py/blob/e0cd1de29957eeb740f329a21f3ae11e59aab0a0/docs/assets/evolve-banner.png" alt="evolve logo" style="width:500px; height:auto">
+<p>
+    <em>A highly efficient, composable, and lightweight ETL and data integration framework</em>
+</p>
+
+<br>
+
+[![CI](https://github.com/firelink-sh/evolve-py/actions/workflows/ci.yml/badge.svg)](https://github.com/firelink-sh/evolve/actions/workflows/ci.yml)
+[![Tests](https://github.com/firelink-sh/evolve-py/actions/workflows/tests.yml/badge.svg)](https://github.com/firelink-sh/evolve-py/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/firelink-sh/evolve-py/graph/badge.svg?token=OTFIM6UICZ)](https://codecov.io/gh/firelink-sh/evolve-py)
+
+<br>
 
 </div>
 
-What is `evolve`?
+evolve is an **open-source** and **platform agnostic** Python framework that enables your data teams to **efficiently integrate data** from a wide variety of **structured** or **unstructured** data sources into your **database**, **data warehouse**, or **data lake(house)** — **blazingly fast** with **minimal memory overhead** all thanks to Apache Arrow. 
 
-A platform agnostic Python framework for building composable, memory-efficient,
-and blazing fast ETL and ingress jobs.
+It is **built for developers** with a code-first mindset. You will not find any low-code, clickops, or drag-and-drop shenanigans here.
+evolve offers you full control of how your data is read, parsed, handled in-memory, transformed, and finally written to any destination you need.
 
-It is built for real data engineers - no low-code/click-ops/drag-and-drop shenanigans -
-offering you full control of how data is read/loaded, parsed, stored in-memory,
-transformed, and written to a large sets of data targets.
 
-Essentially `evolve` is a high-performance data processing framework
-enabled through the Apache Arrow specification:
-
-- **Columnar memory format**
-- **Zero-Copy data sharing**
-- **Vectorized operations**
-- **Memory efficiency**
-- **Compatibility with big-data technology**
-
+## Hgih-level architecture
 
 ```mermaid
 flowchart TD
@@ -66,7 +65,9 @@ flowchart TD
     Arrow --> CustomOut
 ```
 
-Why?
+
+## Why evolve?
+
 - Ingress and ETL/ELT is for some reason difficult for organizations to manage,
     costly, without clear standards/frameworks it rapidly becomes messy.
 - no "lowcode"/UI/drag and drop shit, made for real data engineers, not business managers
@@ -106,7 +107,7 @@ pipeline = Pipeline("ingress") \
 pipeline.run()  # runs the ETL
 ```
 
-You can configure it with yaml/json/toml!
+You can configure it with yaml or json!
 
 ```yml
 source:
@@ -133,16 +134,9 @@ target:
   path: s3://prod/sales/orders.parquet
 ```
 
-```json
-{
-  "source": {
-    ...
-  },
-  "transforms": {
-    ...
-  },
-  "target": {
-    ...
-  }
-}
-```
+
+## License
+
+evolve is distributed under the terms of both the MIT License and the Apache License (version 2.0).
+
+See LICENSE-APACHE and LICENSE-MIT for details.
