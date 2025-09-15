@@ -1,6 +1,6 @@
 """
 Note to self: the evolve.io module should not be the implementation of each
-different type of ile, database, etc.
+different type of file, database, etc.
 
 IO should represent different data FORMATS to read/write data,
 i.e., it could be file, adbc, jdbc, kafka, ipc, gRPC, etc.
@@ -38,6 +38,11 @@ class ParquetSource(evolve.io.File):
 
 is this a reasonable abstraction? or too much?
 what do I mean by I/O vs source?...
+
+...
+
+Hm, what do other frameworks do?
+pandas does io -> csv, fwf, json, ...
 
 """
 
