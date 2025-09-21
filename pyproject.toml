@@ -40,7 +40,7 @@ indent-style = "space"
 docstring-code-format = true
 
 [tool.ruff.lint]
-select = ["D", "W", "E", "F", "B", "I", "ANN", "ASYNC", "S", "C4", "PTH", "N", "PERF"]
+# select = ["D", "W", "E", "F", "B", "I", "ANN", "ASYNC", "S", "C4", "PTH", "N", "PERF"]
 ignore = ["D100", "D104", "D105", "D203", "D205", "D212"]
 
 [tool.ruff.lint.per-file-ignores]

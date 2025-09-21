@@ -1,7 +1,10 @@
+import os
 from pathlib import Path
 from typing import Tuple, Mapping
 
 from pyarrow import fs
+
+from ..exceptions import UnknownUriSchemeError
 
 
 def _try_get_file_system_from_uri(

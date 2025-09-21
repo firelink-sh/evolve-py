@@ -1,5 +1,3 @@
-from typing import TYPE_CHECKING
-
 from pyarrow import csv
 
 from ._base import BaseIO
@@ -54,9 +52,9 @@ class CsvFile(BaseIO):
 
     def write(self, data: IR) -> None:
         """Write the backend IR data as a csv to the target path."""
-        with self._file_system.open_output_stream(self._file_path) as target:
+        with self._file_system.open_output_stream(self._file_path) as sink:
             csv.write_csv(
                 data=self._backend.ir_to_arrow_table(data),
-                output_file=target,
+                output_file=sink,
                 write_options=self._write_options,
             )

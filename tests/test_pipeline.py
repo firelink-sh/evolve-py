@@ -24,7 +24,7 @@ DUMMY_YAML = """
 
 
 def test_from_yaml_str():
-    yaml = pipeline = Pipeline.from_yaml_str(DUMMY_YAML)
+    pipeline = Pipeline.from_yaml_str(DUMMY_YAML)
     print(pipeline)
     assert len(pipeline._transforms) == 3
 

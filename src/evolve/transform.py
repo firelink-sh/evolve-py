@@ -1,7 +1,6 @@
 import abc
-from typing import List
 
-from .ir import LazyIR
+from .ir import IR
 
 
 class Transform(abc.ABC):
@@ -26,21 +25,6 @@ class Transform(abc.ABC):
         """Get the name of the transform."""
         return self._name
 
-    def apply(self, data: LazyIR) -> LazyIR:
+    def apply(self, data: IR) -> IR:
         """Apply the transform on the data."""
         pass
-
-
-class DropColumns(Transform):
-    """Implementation of a DropColumns transform."""
-
-    def __init__(self, columns: str | List[str]) -> None:
-        """Initialize a new DropColumns transform."""
-        super(DropColumns, self).__init__(name=self.__class__.__name__)
-        self._columns = columns
-
-    def apply(self, data: LazyIR) -> LazyIR:
-        df = data.get_ir()
-        df = df.drop(self._columns, strict=True)
-        data.set_ir(df)
-        return data

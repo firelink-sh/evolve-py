@@ -6,9 +6,10 @@ from typing import Union
 import duckdb
 import polars as pl
 import pyarrow as pa
+from pyarrow import ipc
 
 # Internal representation of data - depends on the chosen backend.
-IR = Union[pl.DataFrame, pa.Table, duckdb.DuckDBPyConnection]
+IR = Union[bytes, pl.Series, pl.DataFrame, pa.Table, duckdb.DuckDBPyConnection]
 
 
 class BackendMismatchWarning(Warning):
@@ -30,7 +31,7 @@ class BaseBackend(abc.ABC):
 
 
 class ArrowBackend(BaseBackend):
-    """Implementation of an `Arrow` in-memory backend."""
+    """Implementation of an arrow in-memory table backend."""
 
     def ir_from_arrow_table(self, data: pa.Table) -> pa.Table:
         """This is a no-op."""
@@ -48,7 +49,7 @@ class ArrowBackend(BaseBackend):
 
 
 class PolarsBackend(BaseBackend):
-    """Implementation of a `Polars` in-memory backend."""
+    """Implementation of a polars in-memory dataframe backend."""
 
     def ir_from_arrow_table(self, table: pa.Table) -> IR:
         return pl.from_arrow(table)
@@ -61,7 +62,7 @@ class PolarsBackend(BaseBackend):
 
 
 class DuckdbBackend(BaseBackend):
-    """Implementation of a `DuckDB` in-memory backend."""
+    """Implementation of a duckdb in-memory database backend."""
 
     def __init__(self) -> None:
         """Initialize in-memory database connection."""
@@ -74,25 +75,22 @@ class DuckdbBackend(BaseBackend):
         return data.execute("SELECT * FROM tmp_arrow_data;").fetch_arrow_table()
 
 
-class LazyIR:
-    """Implementation of a Lazy Internal Representation (IR)."""
+class BytesBackend(BaseBackend):
+    """Implementation of a bytes in-memory backend."""
 
-    @classmethod
-    def from_arrow_table(cls, table: pa.Table) -> LazyIR:
-        """Initialize a new LazyIR."""
-        return cls(ir=pl.from_arrow(table))
+    def bytes_from_ir(self, _bytes: bytes) -> bytes:
+        return _bytes
 
-    def __init__(self, ir: IR) -> None:
-        """Initialize a new Lazy IR."""
-        self._ir = ir
+    def ir_from_bytes(self, _bytes: bytes) -> IR:
+        return _bytes
 
-    def get_ir(self) -> IR:
-        """Get the IR."""
-        return self._ir
+    def ir_from_arrow_table(self, table: pa.Table) -> IR:
+        # We need to serialize the table to bytes using ipc
+        sink = pa.BufferOutputStream()
+        with ipc.new_stream(sink, table.schema) as stream:
+            stream.write_table(table)
 
-    def set_ir(self, ir: IR) -> None:
-        """Update the IR."""
-        self._ir = ir
+        return sink.getvalue().to_pybytes()
 
 
 _current_backend: BaseBackend = PolarsBackend()

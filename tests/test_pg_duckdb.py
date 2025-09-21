@@ -1,6 +1,5 @@
 import pytest
 import sqlalchemy as sa
-import pyarrow as pa
 import duckdb
 from testcontainers.postgres import PostgresContainer
 

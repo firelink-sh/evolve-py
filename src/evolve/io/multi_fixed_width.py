@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterable, Tuple
+from typing import Iterable
 
 import polars as pl
 
