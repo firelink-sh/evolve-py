@@ -2,9 +2,7 @@ from typing import Iterable
 
 import duckdb
 
-from evolve.ir import get_global_backend
-
-from ..ir import IR, BaseBackend
+from ..ir import IR, BaseBackend, get_global_backend
 from ._base import BaseIO
 
 

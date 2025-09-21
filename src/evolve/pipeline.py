@@ -80,7 +80,7 @@ class Pipeline:
     def run(self) -> None:
         print("Running pipeline")
         print(f"  Loading data from source: '{self._source._name}'")
-        ir = self._source.load()
+        ir = self._source.read()
         for transform in self._transforms:
             print(f"  - Applying transform: '{transform.name}'")
             ir = transform.apply(ir)

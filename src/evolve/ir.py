@@ -60,6 +60,9 @@ class PolarsBackend(BaseBackend):
     def ir_to_polars_df(self, data: pl.DataFrame) -> pl.DataFrame:
         return data
 
+    def ir_from_polars(self, df: pl.DataFrame) -> pl.DataFrame:
+        return df
+
 
 class DuckdbBackend(BaseBackend):
     """Implementation of a duckdb in-memory database backend."""
@@ -81,16 +84,21 @@ class BytesBackend(BaseBackend):
     def bytes_from_ir(self, _bytes: bytes) -> bytes:
         return _bytes
 
-    def ir_from_bytes(self, _bytes: bytes) -> IR:
+    def ir_from_bytes(self, _bytes: bytes) -> bytes:
         return _bytes
 
-    def ir_from_arrow_table(self, table: pa.Table) -> IR:
+    def ir_from_arrow_table(self, table: pa.Table) -> bytes:
         # We need to serialize the table to bytes using ipc
         sink = pa.BufferOutputStream()
         with ipc.new_stream(sink, table.schema) as stream:
             stream.write_table(table)
 
         return sink.getvalue().to_pybytes()
+
+    def ir_to_arrow_table(self, _bytes: bytes) -> pa.Table:
+        buffer = pa.py_buffer(_bytes)
+        with ipc.open_stream(buffer) as reader:
+            return reader.read_all()
 
 
 _current_backend: BaseBackend = PolarsBackend()

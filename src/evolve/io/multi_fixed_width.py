@@ -74,3 +74,6 @@ class MultiFixedWidthFile(BaseIO):
             dfs.append(df_schema_spec)
 
         return dfs
+
+    def write(self, data: IR) -> None:
+        pass

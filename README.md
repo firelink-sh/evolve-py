@@ -15,7 +15,7 @@
 
 </div>
 
-evolve is an **open-source** and **platform agnostic** Python framework that enables your data teams to **efficiently integrate data** from a wide variety of **structured** or **unstructured** data sources into your **database**, **data warehouse**, or **data lake(house)** — **blazingly fast** with **minimal memory overhead** thanks to Apache Arrow. 
+evolve is an **open-source** and **platform agnostic** Python framework that enables your data teams to **efficiently integrate data** from a wide variety of **structured** or **unstructured** data sources into your **database**, **data warehouse**, or **data lake(house)** — **blazingly fast** with **minimal memory overhead** thanks to the Apache Arrow ecosystem. 
 
 It is **built for developers** with a **code-first** mindset. You will not find any low-code, clickops, or drag-and-drop shenanigans here.
 evolve offers you full control of how your data is read, parsed, handled in-memory, transformed, and finally written to any destination you need.

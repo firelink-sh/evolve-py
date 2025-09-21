@@ -98,3 +98,6 @@ class FixedWidthFile(BaseIO):
         ).drop("full_str")
 
         return self._backend.ir_from_polars(df)
+
+    def write(self, data: IR) -> None:
+        pass
