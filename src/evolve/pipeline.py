@@ -4,8 +4,6 @@ from pathlib import Path
 
 import yaml
 
-from .source.base import BaseSource
-from .target.base import BaseTarget
 from .transform import Transform
 
 
@@ -65,11 +63,11 @@ class Pipeline:
         s += ")"
         return s
 
-    def with_source(self, s: BaseSource) -> Pipeline:
+    def with_source(self, s) -> Pipeline:
         self._source = s
         return self
 
-    def with_target(self, t: BaseTarget) -> Pipeline:
+    def with_target(self, t) -> Pipeline:
         self._target = t
         return self
 

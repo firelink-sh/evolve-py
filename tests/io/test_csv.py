@@ -7,12 +7,12 @@ from pyarrow import csv
 from testcontainers.minio import MinioContainer
 
 from evolve.ir import ArrowBackend, DuckdbBackend
-from evolve.source import CsvSource
+from evolve.io import CsvFile
 
 
 def test_csv_source_local_file_duckdb_backend():
-    source = CsvSource("examples/data/dummy.csv", backend=DuckdbBackend())
-    ir = source.load()
+    source = CsvFile("examples/data/dummy.csv", backend=DuckdbBackend())
+    ir = source.read()
     print("========== LOCAL CSV (Backend: DuckDB) ===========")
     assert isinstance(ir, DuckDBPyConnection)
     t = ir.execute("SELECT * FROM tmp_arrow_data;").fetch_arrow_table()
@@ -21,16 +21,16 @@ def test_csv_source_local_file_duckdb_backend():
 
 
 def test_csv_source_local_file_arrow_backend():
-    source = CsvSource("examples/data/dummy.csv", backend=ArrowBackend())
-    ir = source.load()
+    source = CsvFile("examples/data/dummy.csv", backend=ArrowBackend())
+    ir = source.read()
     print("========== LOCAL CSV (Backend: PyArrow) ===========")
     print(ir)
     assert isinstance(ir, pa.Table)
 
 
 def test_csv_source_local_file_polars_backend():
-    source = CsvSource("examples/data/dummy.csv")
-    ir = source.load()
+    source = CsvFile("examples/data/dummy.csv")
+    ir = source.read()
     print("========== LOCAL CSV (Backend: Polars) ===========")
     print(ir.head())
     assert isinstance(ir, pl.DataFrame)
@@ -75,12 +75,12 @@ def test_csv_source_s3_minio():
         endpoint = f"http://{host}:{port}"
         uri = "s3://evolve-test/evolve_created/test.csv"
 
-        source = CsvSource(
+        source = CsvFile(
             uri,
             access_key=minio.access_key,
             secret_key=minio.secret_key,
             endpoint_override=endpoint,
         )
-        ir = source.load()
+        ir = source.read()
         print("============ S3 csv ============")
         print(ir.head())

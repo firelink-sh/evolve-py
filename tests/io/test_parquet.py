@@ -12,15 +12,15 @@ from evolve.ir import (
     PolarsBackend,
     set_global_backend,
 )
-from evolve.source import ParquetSource
+from evolve.io import ParquetFile
 
 
 def test_parquet_source_local_file_arrow_backend():
-    source = ParquetSource(
+    source = ParquetFile(
         "examples/data/weather.parquet",
         backend=ArrowBackend(),
     )
-    ir = source.load()
+    ir = source.read()
     print("============ LOCAL Parquet (Backend: PyArrow) ============")
     print(ir)
     assert isinstance(ir, pa.Table)
@@ -49,14 +49,14 @@ def test_parquet_source_s3_minio_duckdb_backend():
         endpoint = f"http://{host}:{port}"
         uri = "s3://evolve-test/evolve_created/test.parquet"
 
-        source = ParquetSource(
+        source = ParquetFile(
             uri,
             access_key=minio.access_key,
             secret_key=minio.secret_key,
             endpoint_override=endpoint,
             backend=DuckdbBackend(),
         )
-        ir = source.load()
+        ir = source.read()
         assert isinstance(ir, DuckDBPyConnection)
         t = ir.execute("SELECT * FROM tmp_arrow_data;").fetch_arrow_table()
         print("============ LOCAL Parquet (Backend: DuckDB) ============")
@@ -66,10 +66,10 @@ def test_parquet_source_s3_minio_duckdb_backend():
 
 def test_parquet_source_local_file_polars_backend():
     set_global_backend(PolarsBackend())
-    source = ParquetSource(
+    source = ParquetFile(
         Path.cwd() / "examples" / "data" / "weather.parquet",
     )
-    ir = source.load()
+    ir = source.read()
     print("========== LOCAL PARQUET (Backend: Polars) ============")
     print(ir.head())
 
@@ -111,12 +111,12 @@ def test_parquet_source_s3_minio():
         endpoint = f"http://{host}:{port}"
         uri = "s3://evolve-test/evolve_created/test.parquet"
 
-        source = ParquetSource(
+        source = ParquetFile(
             uri,
             access_key=minio.access_key,
             secret_key=minio.secret_key,
             endpoint_override=endpoint,
         )
-        ir = source.load()
+        ir = source.read()
         print("============ S3 parquet ============")
         print(ir.head())
