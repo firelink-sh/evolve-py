@@ -2,7 +2,7 @@
 
 <img src="https://github.com/firelink-sh/evolve-py/blob/368bd3c6d1f520515a63b2f7b1340976a5c58b94/docs/assets/evolve-banner.png" alt="evolve logo" style="width:500px; height:auto">
 <p>
-    <em>A highly efficient, composable, and lightweight ETL and data integration framework</em>
+  <em>A highly efficient, composable, and lightweight ETL and data integration framework.</em>
 </p>
 
 <br>
@@ -71,43 +71,16 @@ flowchart TD
 ```
 
 
-## Why evolve?
-
-- Ingress and ETL/ELT is for some reason difficult for organizations to manage,
-    costly, without clear standards/frameworks it rapidly becomes messy.
-- no "lowcode"/UI/drag and drop shit, made for real data engineers, not business managers
-- no vendor lock-in. easy to audit, extend, and run wherever.
-- standardized interface/framework - custom logic
-- arrow native
-  - fast in-memory operations (perfect for OLAP)
-  - easy interoperability with DuckDB, Pandas, Polars, Spark, etc.
-  - Potential for streaming, GPU acceleration, real-time analytics.
-- deployment agnostic (NO LOCK-IN)!!!! YOU RUN IT HOW YOU WANT TO - I COULDN'T CARE LESS
-- community potential :)
-
-This is not a replacement for Fivetran or Airbyte - we are offering a **developer-first alternative**
-- lightweight
-- transparent
-- extensible
-- free
-- high performant
-
-There is no reason to reinvent the wheel for your ETL needs - use evolve!
-
-
 ## Example usage
 
 ```python
-from evolve import Pipeline
-from evolve.source import PostgresSource
-from evolve.target import ParquetTarget
-from evolve.transform import DropNulls
+import evolve as ev
 
 # Pipelines are lazy - only run when told to
-pipeline = Pipeline("ingress") \
-    .with_source(PostgresSource(...)) \
-    .with_target(ParquetTarget(...)) \
-    .with_transform(DropNulls(columns=(..., ))
+pipeline = ev.Pipeline("parquet-ingestion") \
+    .with_source(ev.io.FixedWidthFile(...)) \
+    .with_target(ev.io.ParquetFile(...)) \
+    .with_transform(DropNulls(columns=(..., )))
 
 pipeline.run()  # runs the ETL
 ```
