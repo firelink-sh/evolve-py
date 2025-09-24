@@ -8,6 +8,57 @@ resolution-markers = [
 ]
 
 [[package]]
+name = "adbc-driver-manager"
+version = "1.8.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/55/2a/00fe4974b7d134c8d0691a87f09460d949e607e1ef65a022c665e8bde64f/adbc_driver_manager-1.8.0.tar.gz", hash = "sha256:88ca0f4d8c02fc6859629acaf0504620da17a39549e64d4098a3497f7f1eb2d0", size = 203568, upload-time = "2025-09-12T12:31:24.233Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4d/0c/2bb08c26a551aae886289fab8ab6d1bf03f4bef5b74632123500a2bc6662/adbc_driver_manager-1.8.0-cp311-cp311-macosx_10_15_x86_64.whl", hash = "sha256:58c10f81134bf8a528fab3848ac14447f3fe158d9fbc84197e79a24827f94f2a", size = 537727, upload-time = "2025-09-12T12:29:50.082Z" },
+    { url = "https://files.pythonhosted.org/packages/a9/67/f2e1694875ccbc72c15c334e1ef2f4338b4cb098ba217f4e535d92d5d2f7/adbc_driver_manager-1.8.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:f59794ae27eef7a17be5583d46b746749b3cbae5e58b0fe0f44746e8498d6f5c", size = 516680, upload-time = "2025-09-12T12:29:52.51Z" },
+    { url = "https://files.pythonhosted.org/packages/f5/7d/65a41108cb3c1a87e570cf80a50ca94521f748a58780a41d61ea1d946051/adbc_driver_manager-1.8.0-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:fed9a2cb46602cff67f503bbf55c6ee2e69a7e5c07a08514b5bd27a656a3e40b", size = 3103357, upload-time = "2025-09-12T12:29:55.226Z" },
+    { url = "https://files.pythonhosted.org/packages/43/15/6e22524aadc7ea82c0868492cdf7e28ab30b476edd5d3d6ef29a882775ec/adbc_driver_manager-1.8.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:349fecd931e5211f00ce00d109fc80a484046fe41644aa402b97496919aa8c2a", size = 3113074, upload-time = "2025-09-12T12:29:57.453Z" },
+    { url = "https://files.pythonhosted.org/packages/ca/a1/05f66007556623a7fb37af6535fe19377d2f4757bf0c94f64f350521c9dc/adbc_driver_manager-1.8.0-cp311-cp311-win_amd64.whl", hash = "sha256:92105ae34a42603c7f64b4b0f2d851380c018e9c9f4e9a764a01b1b6f1fa6156", size = 712252, upload-time = "2025-09-12T12:29:59.162Z" },
+    { url = "https://files.pythonhosted.org/packages/19/c7/05b5559eff9a42c53c47d86e32aa0b15bd206ef4be04f3a678da7871a8dd/adbc_driver_manager-1.8.0-cp312-cp312-macosx_10_15_x86_64.whl", hash = "sha256:0e6bbe0b026a17c69c1e7410a8df2366bb80803be0f0d8a7eed2defbed313a65", size = 537879, upload-time = "2025-09-12T12:30:00.798Z" },
+    { url = "https://files.pythonhosted.org/packages/25/f0/d7ed70a28933e2c6b95455306c005d9022fc558e26e759ed65fce0537b79/adbc_driver_manager-1.8.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:e5f0f89d13b8f86dc20522988caceab37085fe155ebbea4e9013a7962170011c", size = 512702, upload-time = "2025-09-12T12:30:02.543Z" },
+    { url = "https://files.pythonhosted.org/packages/37/a6/fc66e7b72857589ba5cdd0dcfc388ea746ed805caf4031580b1c065481fa/adbc_driver_manager-1.8.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:abd11c6ecdc8119641d2a929e50c9f6ff822b322859bf08a085e7ba9d1adb399", size = 3086175, upload-time = "2025-09-12T12:30:04.491Z" },
+    { url = "https://files.pythonhosted.org/packages/e7/90/4780e8cab75f11644d260a73307445254288405352a99cfb3b2889c50e80/adbc_driver_manager-1.8.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:f7689b0cf30d77532189b30762e3f6a347275e57e511e885f0eba45ce40ce02c", size = 3113622, upload-time = "2025-09-12T12:30:06.665Z" },
+    { url = "https://files.pythonhosted.org/packages/c5/b4/ed76afa37c344395a33d1f894dcd82b5cee2281925c235405a9078d10a29/adbc_driver_manager-1.8.0-cp312-cp312-win_amd64.whl", hash = "sha256:3f0454ec6fc2b5d3c3629b504ee65dbded2516412647070e26cdc9c14341ac74", size = 703323, upload-time = "2025-09-12T12:30:07.984Z" },
+    { url = "https://files.pythonhosted.org/packages/56/79/76d505f43c6195920a41f812192bbd5fb1a490ade1c81fe5ba9f07a86f23/adbc_driver_manager-1.8.0-cp313-cp313-macosx_10_15_x86_64.whl", hash = "sha256:04e0676f7bd16dd7d7c403f506b7a22a542fe89f4471526c82cfd546353b125f", size = 536549, upload-time = "2025-09-12T12:30:09.513Z" },
+    { url = "https://files.pythonhosted.org/packages/9f/1b/61e9badd21f0936a43692275f84dbf4baa4f39d4100042a14edbf9654a4d/adbc_driver_manager-1.8.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:6dddf0ae5b8d636015b1f7fc6972167c1824bd950f3ed6a178d083e89dfd322a", size = 510497, upload-time = "2025-09-12T12:30:10.837Z" },
+    { url = "https://files.pythonhosted.org/packages/9c/52/501e0d11b2ba9fca1eb2698cb56ff14c94e8a1cad421a9c90c2e23edfbd8/adbc_driver_manager-1.8.0-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:d70431e659e8e51d222fa238410085f0c13921154e0a17e9a687f7896667138f", size = 3085322, upload-time = "2025-09-12T12:30:12.893Z" },
+    { url = "https://files.pythonhosted.org/packages/38/5e/0a79d48fe44cc8387221fff44dfa956c5ce6131a72f08e393748cbb090e0/adbc_driver_manager-1.8.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:8b4d34618a5e64e678210dfdf76704f11e09529fc221dbd576ead6c14555883d", size = 3107704, upload-time = "2025-09-12T12:30:14.861Z" },
+    { url = "https://files.pythonhosted.org/packages/71/42/689194767d6ec09bb9b9216c27000ff193199c9bd7d7d5c6c5aad1bc2400/adbc_driver_manager-1.8.0-cp313-cp313-win_amd64.whl", hash = "sha256:82da1442b6d786d2f87ac0f3dd0bbc7462ec90cb3316168a4db88044d470baa2", size = 702235, upload-time = "2025-09-12T12:30:24.469Z" },
+    { url = "https://files.pythonhosted.org/packages/83/45/4e98be65dab4e61c9c0227c4908ab9a5db1db320eec8badfd5b253c5854b/adbc_driver_manager-1.8.0-cp313-cp313t-macosx_10_15_x86_64.whl", hash = "sha256:bc1677c06998361b5c3237d9f408b69fb23942f7157e2dd4ce515f658a60d3d4", size = 551974, upload-time = "2025-09-12T12:30:16.782Z" },
+    { url = "https://files.pythonhosted.org/packages/8f/4a/c4d83125e1dc0532006b3fd3c816a2c2956dedb881a89e0cb47f4eda1bcc/adbc_driver_manager-1.8.0-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:86cb394bdd3ac298761e0ff8ceab8ad9c2f6ce5650d7f4ac7c8609bc74876929", size = 529497, upload-time = "2025-09-12T12:30:18.756Z" },
+    { url = "https://files.pythonhosted.org/packages/c7/6c/d1752ed66109fe1866d9aabe0f6a930b8443d8e62d17f333a38b97b37b85/adbc_driver_manager-1.8.0-cp313-cp313t-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:1a834f2f269285d1308aa97ae6000002acdb79d70733735f16b3c9918ca88c1f", size = 3148300, upload-time = "2025-09-12T12:30:21.301Z" },
+    { url = "https://files.pythonhosted.org/packages/3d/59/971e28a01382590ead8352d83a2d77b1f8beb2c4cc1b59036e1b68fd59e1/adbc_driver_manager-1.8.0-cp313-cp313t-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:8fcf38cc4b993336f49b6d1e407d4741ed1ea898f58088314005f8da7daf47db", size = 3134384, upload-time = "2025-09-12T12:30:23.252Z" },
+    { url = "https://files.pythonhosted.org/packages/54/4e/0f826b68d5e0d50f8b1207514d0d17bf60663b7d51efd21f3754b5885450/adbc_driver_manager-1.8.0-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:f954783e306ff1e1602d8390e74e00357142c382bff22ab159e8f94a95c8cfcb", size = 3082317, upload-time = "2025-09-12T12:30:26.8Z" },
+    { url = "https://files.pythonhosted.org/packages/da/bf/ce5efe35be83b652e4b6059cfff48b59d648560a9dc99caac8da0a3441cd/adbc_driver_manager-1.8.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:61d5ec92af49a76345db1ae0a3890789797078b5b9948d550a47e8cfaa27cc19", size = 3089760, upload-time = "2025-09-12T12:30:28.772Z" },
+    { url = "https://files.pythonhosted.org/packages/f2/b3/d3254595b61890da1dc6d44178abe10262136d20aeffae4a86d3e289371e/adbc_driver_manager-1.8.0-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:4f68df12cfbffaf4bec832ed406fb6ce978fd7dba8a4e8e377c9658fcd83b6a3", size = 3147028, upload-time = "2025-09-12T12:30:30.53Z" },
+    { url = "https://files.pythonhosted.org/packages/68/ba/82d1f9521bc755d8d0d66eaac47032e147c2fe850eb308ba613710b27493/adbc_driver_manager-1.8.0-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:a4402633d548e3ecdcf89a7133fd72b88a807a3c438e13bdb61ccc79d6239a65", size = 3133693, upload-time = "2025-09-12T12:30:32.357Z" },
+]
+
+[[package]]
+name = "adbc-driver-postgresql"
+version = "1.8.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "adbc-driver-manager" },
+    { name = "importlib-resources" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/56/3a/3873d398f2df59bd1b20c803a24ef51068586554ea85ec8db6905f6ee639/adbc_driver_postgresql-1.8.0.tar.gz", hash = "sha256:66689c5616e41229c53ef222f63b60841f05b11610e60fb9029e54ac500e6d0d", size = 20306, upload-time = "2025-09-12T12:31:25.277Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c7/e9/2c68074a173fdaa69028f170317144607e1c6bd26dd343e014b1935ffc12/adbc_driver_postgresql-1.8.0-py3-none-macosx_10_15_x86_64.whl", hash = "sha256:1f155941e8b7b75210f78a128758b5e12a45c370d462ea0da42e7763b1e3e84e", size = 2691625, upload-time = "2025-09-12T12:30:43.672Z" },
+    { url = "https://files.pythonhosted.org/packages/04/50/880b39754cf3b590e37f940dcfe45e72de18c8363fbc510fb22a26274e9c/adbc_driver_postgresql-1.8.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:22e11fe708303753e3bcac7798f4dc0f4a110db2b7447fddaf811b2d7af026ca", size = 3003079, upload-time = "2025-09-12T12:30:45.848Z" },
+    { url = "https://files.pythonhosted.org/packages/c0/75/fe2923c934dea56a05e331469c60bcac4558e656ccd4f1b2ecc252297ca6/adbc_driver_postgresql-1.8.0-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:bed9d730905fddd61712fcad3954ccb7342c83a7f81bc51265eb33b1b83c5b6c", size = 3196334, upload-time = "2025-09-12T12:30:47.925Z" },
+    { url = "https://files.pythonhosted.org/packages/36/43/5bb16e9220b23a21692e60c9f036c0e79b4f78409109df6c72b4b4abc945/adbc_driver_postgresql-1.8.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:ef2fb1f60ef0e4195ddae0b8d52a5dd7f31d2b7d29ca88db1a805736ff5fbd05", size = 2855368, upload-time = "2025-09-12T12:30:51.127Z" },
+    { url = "https://files.pythonhosted.org/packages/7a/36/2383ecf8888a77108b4cee249ee105d303851f9a08356fcc66d43bfbbc7c/adbc_driver_postgresql-1.8.0-py3-none-win_amd64.whl", hash = "sha256:08b78dd96d72d3855eb967bd46a7ca5e4fbc0b75c2a9fea6281d95cc6e934a8f", size = 2975792, upload-time = "2025-09-12T12:30:53.118Z" },
+]
+
+[[package]]
 name = "argon2-cffi"
 version = "25.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -347,6 +398,7 @@ name = "evolve-py"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "adbc-driver-postgresql" },
     { name = "confluent-kafka" },
     { name = "duckdb" },
     { name = "numpy" },
@@ -370,6 +422,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "adbc-driver-postgresql", specifier = ">=1.8.0" },
     { name = "confluent-kafka", specifier = ">=2.11.1" },
     { name = "duckdb", specifier = ">=1.3.2" },
     { name = "numpy", specifier = ">=2.3.3" },
@@ -440,6 +493,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz", hash = "sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9", size = 190490, upload-time = "2024-09-15T18:07:39.745Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/76/c6/c88e154df9c4e1a2a66ccf0005a88dfb2650c1dffb6f5ce603dfbd452ce3/idna-3.10-py3-none-any.whl", hash = "sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3", size = 70442, upload-time = "2024-09-15T18:07:37.964Z" },
+]
+
+[[package]]
+name = "importlib-resources"
+version = "6.5.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/cf/8c/f834fbf984f691b4f7ff60f50b514cc3de5cc08abfc3295564dd89c5e2e7/importlib_resources-6.5.2.tar.gz", hash = "sha256:185f87adef5bcc288449d98fb4fba07cea78bc036455dd44c5fc4a2fe78fed2c", size = 44693, upload-time = "2025-01-03T18:51:56.698Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a4/ed/1f1afb2e9e7f38a545d628f864d562a5ae64fe6f7a10e28ffb9b185b4e89/importlib_resources-6.5.2-py3-none-any.whl", hash = "sha256:789cfdc3ed28c78b67a06acb8126751ced69a3d5f79c095a98298cd8a760ccec", size = 37461, upload-time = "2025-01-03T18:51:54.306Z" },
 ]
 
 [[package]]
