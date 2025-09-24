@@ -5,7 +5,7 @@ from ..ir import BytesBackend, IR, get_global_backend, BaseBackend
 from ._base import BaseIO
 
 
-class BytesIO(BaseIO):
+class Bytes(BaseIO):
     """Implementation of bytes I/O."""
 
     def __init__(
