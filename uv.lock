@@ -59,6 +59,23 @@ wheels = [
 ]
 
 [[package]]
+name = "adbc-driver-sqlite"
+version = "1.8.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "adbc-driver-manager" },
+    { name = "importlib-resources" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b2/5f/2a6f0b00672e20406532f3b9b0cd1ec4345af17eb9c3a1e496b02cc02c44/adbc_driver_sqlite-1.8.0.tar.gz", hash = "sha256:a48c40a2ba2e33b73df9f2b93ed375e72d71d754035574d0d194125fed39d98c", size = 18309, upload-time = "2025-09-12T12:31:27.833Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/52/70/b40ce37ecae79ab74d5bcf62700d0abcd2ea57e3a2be41e5ca7b2af9ea6d/adbc_driver_sqlite-1.8.0-py3-none-macosx_10_15_x86_64.whl", hash = "sha256:fbfac5011e4d743044a95f0befbf2c2f3afc4c4fb61bb4184bf0e5a6e7362d74", size = 1043934, upload-time = "2025-09-12T12:31:14.218Z" },
+    { url = "https://files.pythonhosted.org/packages/51/bb/14d27d8765f3aba2c84176beb00fe0f7415015b0f7b9cd64661048c53a93/adbc_driver_sqlite-1.8.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:7ce28d08da6c34e5aaa43d85e1179c304c9d8d487c86d2dcabc6ef115f0b7937", size = 1010543, upload-time = "2025-09-12T12:31:16.07Z" },
+    { url = "https://files.pythonhosted.org/packages/d5/3c/c318ca73c9398c00795d25a64e9fbc09146cd148b46ff7582fd95ceb1c48/adbc_driver_sqlite-1.8.0-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:b3ca480ef8fc0721790d9ebe7706cb11dea28fbbf98c56ae6c6024da827829ba", size = 957091, upload-time = "2025-09-12T12:31:17.517Z" },
+    { url = "https://files.pythonhosted.org/packages/15/18/0cfe03d8ae1ec6f33cc01d8533c8b0e8202b4174332d89efaf01208f5c48/adbc_driver_sqlite-1.8.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:d808b5cc11ed02a731fdf3d76e14a588add17b6065745be6c26f4f5cd05a6a14", size = 980254, upload-time = "2025-09-12T12:31:19.229Z" },
+    { url = "https://files.pythonhosted.org/packages/de/cc/52deb7f2a069fd0d2025ce264e738fcca3cc8b37d5b1cfb0905889c48950/adbc_driver_sqlite-1.8.0-py3-none-win_amd64.whl", hash = "sha256:44d4131d3ffb7ec8563ac82d8662f0d7431b748be44f19203105ea2d249e1d26", size = 955904, upload-time = "2025-09-12T12:31:20.995Z" },
+]
+
+[[package]]
 name = "argon2-cffi"
 version = "25.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -399,6 +416,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "adbc-driver-postgresql" },
+    { name = "adbc-driver-sqlite" },
     { name = "confluent-kafka" },
     { name = "duckdb" },
     { name = "numpy" },
@@ -423,6 +441,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "adbc-driver-postgresql", specifier = ">=1.8.0" },
+    { name = "adbc-driver-sqlite", specifier = ">=1.8.0" },
     { name = "confluent-kafka", specifier = ">=2.11.1" },
     { name = "duckdb", specifier = ">=1.3.2" },
     { name = "numpy", specifier = ">=2.3.3" },
