@@ -26,3 +26,6 @@ class SQLiteTable(BaseIO):
     def write(self, data: IR) -> None:
         """Write to an sqlite table."""
         pass
+
+    def validate_config(self) -> None:
+        pass
