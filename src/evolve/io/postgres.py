@@ -86,4 +86,9 @@ class PostgresTable(BaseIO):
         )
 
     def write(self, data: IR) -> None:
+        """Write to a postgresql table."""
+        pass
+
+    def validate_config(self) -> None:
+        """Validate the postgresql config."""
         pass
