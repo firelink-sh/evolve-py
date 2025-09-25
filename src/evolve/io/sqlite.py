@@ -20,7 +20,9 @@ class SQLiteTable(BaseIO):
         self._connection = connection
 
     def read(self) -> IR:
+        """Read a table from sqlite connection."""
         pass
 
     def write(self, data: IR) -> None:
+        """Write to an sqlite table."""
         pass
