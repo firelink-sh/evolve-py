@@ -7,7 +7,13 @@ from ._base import BaseIO
 class SQLiteTable(BaseIO):
     """Implementation of an SQLite table."""
 
-    def __init__(self, uri: str, **options) -> None:
+    def __init__(
+        self, uri: str, *, backend: BaseBackend | None = None, **options
+    ) -> None:
+        super().__init__(
+            name=self.__class__.__name__,
+            backend=backend or get_global_backend(),
+        )
         connection = sqlite.connect(uri, **options)
 
         self._uri = uri
