@@ -1,5 +1,12 @@
 from . import io
 from .__version__ import __version__
-from .ir import IR, ArrowBackend, BaseBackend, DuckdbBackend, PolarsBackend
+from .ir import (
+    IR,
+    ArrowBackend,
+    BaseBackend,
+    DuckdbBackend,
+    PolarsBackend,
+    set_global_backend,
+)
 from .pipeline import Pipeline
 from .utils import monitor_usage
