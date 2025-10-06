@@ -26,12 +26,19 @@ class ArrowDataset(BaseIO):
         self._file_system = file_system
         self._base_dir = base_dir
 
+        self._schema = options.get("schema")
         self._format = options.get("format", "parquet")
         self._partitioning = options.get("partitioning")
         self._existing_data_behaviour = options.get("existing_data_behaviour", "error")
 
     def read(self) -> IR:
-        pass
+        return self._backend.ir_from_arrow_table(
+            ds.dataset(
+                self._base_dir,
+                format=self._format,
+                filesystem=self._file_system,
+            ).to_table()
+        )
 
     def write(self, data: IR) -> None:
         ds.write_dataset(
